@@ -74,12 +74,17 @@
     margin:0 auto;
   }
 
-  .marca{
-    font-family:var(--display);
-    font-size:1.3rem;
-    font-weight:600;
-    color:var(--secundario);
-  }
+.marca{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo-marca{
+  height:36px;
+  width:auto;
+  display:block;
+}
 
   .marca span{color:var(--primario);}
 
