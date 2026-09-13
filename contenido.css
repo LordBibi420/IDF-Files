@@ -1,16 +1,24 @@
-/* ============ TOKENS ============ */
+/* ============ TOKENS — Identidad ADMCT HydroSmart Community ============ */
   :root{
-    --madera-oscura:#2B211B;
-    --lino:#EDE6D8;
-    --lino-suave:#F5F0E6;
-    --musgo:#5F6B45;
-    --musgo-oscuro:#454E31;
-    --ocre:#B8834A;
-    --texto:#231B16;
-    --texto-suave:#6B6152;
-    --linea:rgba(35,27,22,0.14);
-    --serif: 'Fraunces', serif;
-    --sans: 'Work Sans', sans-serif;
+    /* Paleta según guía de imagen corporativa */
+    --primario:#2E7D32;        /* Verde Botánico / Hoja */
+    --primario-oscuro:#1F5C23; /* variante oscura para hover/contraste */
+    --secundario:#0611A2;      /* Azul Océano */
+    --secundario-oscuro:#050C78;
+    --acento:#FBC02D;          /* Amarillo Girasol */
+    --acento-oscuro:#C99500;
+    --apoyo:#747470;           /* Gris Beige */
+    --apoyo-oscuro:#441B9A;    /* Morado Intenso Azuloso */
+
+    --texto:#1C201D;
+    --texto-suave:#5B605C;
+    --fondo:#EFEFEA;
+    --fondo-suave:#F8F8F5;
+    --linea:rgba(28,32,29,0.14);
+
+    /* Tipografías según guía: primaria ADLaM Display / secundaria Abadi */
+    --display: 'ADLaM Display', sans-serif;
+    --sans: 'Abadi', 'Poppins', sans-serif; /* sustituto web de Abadi (fuente no disponible como webfont) */
     --radio: 2px;
   }
 
@@ -20,7 +28,7 @@
   body{
     font-family:var(--sans);
     color:var(--texto);
-    background:var(--lino-suave);
+    background:var(--fondo-suave);
     line-height:1.5;
     -webkit-font-smoothing:antialiased;
   }
@@ -30,7 +38,7 @@
   ul{list-style:none;}
 
   :focus-visible{
-    outline:2px solid var(--musgo);
+    outline:2px solid var(--primario);
     outline-offset:3px;
   }
 
@@ -41,10 +49,10 @@
   }
 
   h1,h2,h3{
-    font-family:var(--serif);
+    font-family:var(--display);
     font-weight:500;
     letter-spacing:-0.01em;
-    color:var(--madera-oscura);
+    color:var(--secundario);
   }
 
   /* ============ NAV ============ */
@@ -67,13 +75,13 @@
   }
 
   .marca{
-    font-family:var(--serif);
+    font-family:var(--display);
     font-size:1.3rem;
     font-weight:600;
-    color:var(--madera-oscura);
+    color:var(--secundario);
   }
 
-  .marca span{color:var(--musgo);}
+  .marca span{color:var(--primario);}
 
   nav ul{
     display:flex;
@@ -93,7 +101,7 @@
     left:0;bottom:0;
     width:0;
     height:1px;
-    background:var(--musgo);
+    background:var(--primario);
     transition:width .25s ease;
   }
 
@@ -109,7 +117,7 @@
     cursor:pointer;
     padding:6px;
   }
-  .btn-menu span{width:24px;height:2px;background:var(--madera-oscura);}
+  .btn-menu span{width:24px;height:2px;background:var(--secundario);}
 
   /* ============ HERO ============ */
   #inicio{
@@ -126,7 +134,7 @@
 
   .hero-texto p.eyebrow{
     font-size:0.85rem;
-    color:var(--musgo-oscuro);
+    color:var(--primario-oscuro);
     margin-bottom:18px;
   }
 
@@ -150,23 +158,23 @@
     display:inline-block;
     padding:13px 26px;
     font-size:0.95rem;
-    border:1px solid var(--madera-oscura);
+    border:1px solid var(--secundario);
     border-radius:var(--radio);
     transition:background .2s ease, color .2s ease;
   }
 
   .boton-lleno{
-    background:var(--madera-oscura);
-    color:var(--lino-suave);
+    background:var(--secundario);
+    color:var(--fondo-suave);
   }
-  .boton-lleno:hover{background:var(--musgo-oscuro);border-color:var(--musgo-oscuro);}
+  .boton-lleno:hover{background:var(--primario-oscuro);border-color:var(--primario-oscuro);}
 
-  .boton-contorno:hover{background:var(--madera-oscura);color:var(--lino-suave);}
+  .boton-contorno:hover{background:var(--secundario);color:var(--fondo-suave);}
 
   .hero-imagen{
     aspect-ratio:4/5;
     background:
-      linear-gradient(160deg, var(--ocre) 0%, var(--madera-oscura) 100%);
+      linear-gradient(160deg, var(--acento) 0%, var(--secundario) 100%);
     border-radius:var(--radio);
     position:relative;
     overflow:hidden;
@@ -181,8 +189,8 @@
   .hero-imagen .etiqueta{
     position:absolute;
     left:24px;bottom:24px;
-    background:var(--lino-suave);
-    color:var(--madera-oscura);
+    background:var(--fondo-suave);
+    color:var(--secundario);
     padding:10px 16px;
     font-size:0.82rem;
     border-radius:var(--radio);
@@ -223,9 +231,9 @@
 
   .cifra{border-top:1px solid var(--linea);padding-top:14px;}
   .cifra .numero{
-    font-family:var(--serif);
+    font-family:var(--display);
     font-size:2rem;
-    color:var(--musgo-oscuro);
+    color:var(--primario-oscuro);
     display:block;
   }
   .cifra .rotulo{font-size:0.88rem;color:var(--texto-suave);}
@@ -239,7 +247,7 @@
   #quienes-somos .texto-largo p:first-child{
     color:var(--texto);
     font-size:1.12rem;
-    font-family:var(--serif);
+    font-family:var(--display);
     font-style:italic;
     font-weight:500;
   }
@@ -254,21 +262,21 @@
   }
 
   .producto{
-    background:var(--lino-suave);
+    background:var(--fondo-suave);
     padding:36px 30px;
   }
 
   .producto .marca-linea{
     width:34px;height:2px;
-    background:var(--ocre);
+    background:var(--acento);
     margin-bottom:22px;
   }
 
   .producto h3{font-size:1.2rem;margin-bottom:10px;}
   .producto p{color:var(--texto-suave);font-size:0.95rem;margin-bottom:18px;}
   .producto .precio{
-    font-family:var(--serif);
-    color:var(--madera-oscura);
+    font-family:var(--display);
+    color:var(--secundario);
     font-size:1.1rem;
   }
 
@@ -290,7 +298,7 @@
   }
 
   .pieza-vitrina span{
-    color:var(--lino-suave);
+    color:var(--fondo-suave);
     font-size:0.9rem;
     position:relative;
     z-index:2;
@@ -303,11 +311,11 @@
     z-index:1;
   }
 
-  .pieza-vitrina.g1{grid-column:span 2;grid-row:span 2;background:linear-gradient(150deg,#8a6339,#3a2c1f);}
-  .pieza-vitrina.g2{background:linear-gradient(150deg,#6b7a4f,#2f3620);}
-  .pieza-vitrina.g3{background:linear-gradient(150deg,#b8834a,#5b3d20);}
-  .pieza-vitrina.g4{grid-row:span 2;background:linear-gradient(200deg,#5c4a37,#1e1712);}
-  .pieza-vitrina.g5{background:linear-gradient(150deg,#8a6339,#4a3722);}
+  .pieza-vitrina.g1{grid-column:span 2;grid-row:span 2;background:linear-gradient(150deg,var(--primario),var(--primario-oscuro));}
+  .pieza-vitrina.g2{background:linear-gradient(150deg,var(--secundario),var(--secundario-oscuro));}
+  .pieza-vitrina.g3{background:linear-gradient(150deg,var(--acento),var(--acento-oscuro));}
+  .pieza-vitrina.g4{grid-row:span 2;background:linear-gradient(200deg,var(--apoyo-oscuro),#2C1060);}
+  .pieza-vitrina.g5{background:linear-gradient(150deg,var(--apoyo),#4C4F49);}
 
   /* ============ PORTAFOLIO ============ */
   .lista-portafolio{border-top:1px solid var(--linea);}
@@ -328,19 +336,19 @@
   .proyecto h3{font-size:1.25rem;font-weight:500;}
   .proyecto .categoria{
     font-size:0.85rem;
-    color:var(--musgo-oscuro);
+    color:var(--primario-oscuro);
     white-space:nowrap;
   }
 
   /* ============ CONTACTO ============ */
   #contacto{
-    background:var(--madera-oscura);
-    color:var(--lino-suave);
+    background:var(--secundario);
+    color:var(--fondo-suave);
     border-bottom:none;
   }
 
-  #contacto .cabecera-seccion h2{color:var(--lino-suave);}
-  #contacto .cabecera-seccion p{color:#c9beac;}
+  #contacto .cabecera-seccion h2{color:var(--fondo-suave);}
+  #contacto .cabecera-seccion p{color:rgba(255,255,255,0.72);}
 
   .disposicion-contacto{
     display:grid;
@@ -353,7 +361,7 @@
   .campo label{
     display:block;
     font-size:0.85rem;
-    color:#c9beac;
+    color:rgba(255,255,255,0.72);
     margin-bottom:8px;
   }
 
@@ -362,8 +370,8 @@
     width:100%;
     background:transparent;
     border:none;
-    border-bottom:1px solid rgba(237,230,216,0.35);
-    color:var(--lino-suave);
+    border-bottom:1px solid rgba(255,255,255,0.3);
+    color:var(--fondo-suave);
     font-family:var(--sans);
     font-size:1rem;
     padding:8px 0;
@@ -372,26 +380,26 @@
   .campo input:focus,
   .campo textarea:focus{
     outline:none;
-    border-color:var(--ocre);
+    border-color:var(--acento);
   }
 
   .campo textarea{resize:vertical;min-height:90px;}
 
   .datos-contacto dt{
     font-size:0.85rem;
-    color:#c9beac;
+    color:rgba(255,255,255,0.72);
     margin-top:22px;
   }
   .datos-contacto dt:first-child{margin-top:0;}
   .datos-contacto dd{
-    font-family:var(--serif);
+    font-family:var(--display);
     font-size:1.15rem;
     margin-top:4px;
   }
 
   footer{
-    background:var(--madera-oscura);
-    color:#c9beac;
+    background:var(--secundario);
+    color:rgba(255,255,255,0.72);
     font-size:0.85rem;
     padding:24px 0 40px;
     display:flex;
@@ -403,7 +411,7 @@
     nav{
       position:fixed;
       top:65px;left:0;right:0;
-      background:var(--lino-suave);
+      background:var(--fondo-suave);
       border-bottom:1px solid var(--linea);
       max-height:0;
       overflow:hidden;
