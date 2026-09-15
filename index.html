@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -5,7 +7,39 @@
 
 <link rel="icon" type="image/png" sizes="180x180" href="img/favicon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
-@@ -43,16 +43,16 @@
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="contenido.css">
+</head>
+<body>
+
+<header>
+  <div class="barra-nav">
+    <a href="#inicio" class="marca">
+      <img src="img/logo.png" alt="Logo ADMCT HydroSmart Community" class="logo-marca">
+      ADMCT <span>HydroSmart</span>
+    </a>
+    <button class="btn-menu" id="btnMenu" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="navPrincipal">
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#quienes-somos">Quiénes somos</a></li>
+        <li><a href="#producto">Producto</a></li>
+        <li><a href="#vitrina">Vitrina</a></li>
+        <li><a href="#portafolio">Portafolio</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- INICIO -->
   <section id="inicio">
     <div class="envolvente hero">
       <div class="hero-texto">
@@ -22,7 +56,12 @@
       </div>
     </div>
   </section>
-@@ -65,16 +65,16 @@ <h1>Muebles que envejecen mejor que las modas</h1>
+
+  <!-- QUIENES SOMOS -->
+  <section id="quienes-somos">
+    <div class="envolvente contenido">
+      <div>
+        <div class="cabecera-seccion" style="margin-bottom:0;">
           <h2>Quiénes somos</h2>
         </div>
         <div class="cifras">
@@ -39,7 +78,16 @@
       </div>
     </div>
   </section>
-@@ -91,21 +91,21 @@ <h2>Producto</h2>
+
+  <!-- PRODUCTO -->
+  <section id="producto">
+    <div class="envolvente">
+      <div class="cabecera-seccion">
+        <h2>Producto</h2>
+        <p>Tres líneas de trabajo del sistema Atalaya HydroApp, integrando hardware, software y estructura física.</p>
+      </div>
+    </div>
+    <div class="envolvente" style="padding:0 32px;">
       <div class="rejilla-producto">
         <article class="producto">
           <div class="marca-linea"></div>
@@ -61,8 +109,14 @@
         </article>
       </div>
     </div>
-@@ -119,11 +119,11 @@ <h2>Vitrina</h2>
-        <p>Una muestra de piezas recientes, fotografiadas tal como salieron del taller.</p>
+  </section>
+
+  <!-- VITRINA -->
+  <section id="vitrina">
+    <div class="envolvente">
+      <div class="cabecera-seccion">
+        <h2>Vitrina</h2>
+        <p>Una muestra de los módulos y avances recientes del proyecto en la plazoleta.</p>
       </div>
       <div class="rejilla-vitrina">
         <div class="pieza-vitrina g1"><span>Módulo Atalaya — Plazoleta piloto</span></div>
@@ -73,7 +127,14 @@
       </div>
     </div>
   </section>
-@@ -138,23 +138,23 @@ <h2>Portafolio</h2>
+
+  <!-- PORTAFOLIO -->
+  <section id="portafolio">
+    <div class="envolvente">
+      <div class="cabecera-seccion">
+        <h2>Portafolio</h2>
+        <p>Proyectos e hitos completados por el equipo desde el desarrollo del primer prototipo.</p>
+      </div>
       <div class="lista-portafolio">
         <div class="proyecto">
           <span class="anio">2025</span>
@@ -97,7 +158,30 @@
         </div>
       </div>
     </div>
-@@ -185,11 +185,11 @@ <h2>Contacto</h2>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="envolvente">
+      <div class="cabecera-seccion">
+        <h2>Contacto</h2>
+        <p>Contáctanos para conocer más sobre los módulos y cómo llevarlos a tu comunidad.</p>
+      </div>
+      <div class="disposicion-contacto">
+        <form id="formContacto" novalidate>
+          <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+          <div class="campo">
+            <label for="correo">Correo</label>
+            <input type="email" id="correo" name="correo" required>
+          </div>
+          <div class="campo">
+            <label for="mensaje">Cuéntanos tu proyecto</label>
+            <textarea id="mensaje" name="mensaje" required></textarea>
+          </div>
+          <button type="submit" class="boton boton-lleno">Enviar mensaje</button>
         </form>
         <dl class="datos-contacto">
           <dt>Taller</dt>
@@ -109,11 +193,40 @@
           <dt>Horario</dt>
           <dd>Lun – Vie, 8:00 a 17:00</dd>
         </dl>
-@@ -201,8 +201,7 @@ <h2>Contacto</h2>
+      </div>
+    </div>
+  </section>
+
+</main>
 
 <footer>
   <div class="envolvente" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:8px;">
     <span>© 2026 ADMCT HydroSmart Community — Sembrando tecnología, cosechando comunidad</span>
-
   </div>
 </footer>
+
+<script>
+  const btnMenu = document.getElementById('btnMenu');
+  const navPrincipal = document.getElementById('navPrincipal');
+
+  btnMenu.addEventListener('click', () => {
+    const abierto = navPrincipal.classList.toggle('abierto');
+    btnMenu.setAttribute('aria-expanded', abierto);
+  });
+
+  navPrincipal.querySelectorAll('a').forEach(enlace => {
+    enlace.addEventListener('click', () => {
+      navPrincipal.classList.remove('abierto');
+      btnMenu.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  document.getElementById('formContacto').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Mensaje enviado. Te contactaremos pronto.');
+    e.target.reset();
+  });
+</script>
+
+</body>
+</html>
