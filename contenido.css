@@ -18,7 +18,7 @@
 
     /* Tipografías según guía: primaria ADLaM Display / secundaria Abadi */
     --display: 'ADLaM Display', sans-serif;
-    --sans: 'Abadi', 'Poppins', sans-serif; /* sustituto web de Abadi (fuente no disponible como webfont) */
+    --sans: 'Poppins', sans-serif; /* sustituto web de Abadi (fuente no disponible como webfont) */
     --radio: 2px;
   }
 
@@ -74,17 +74,21 @@
     margin:0 auto;
   }
 
-.marca{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
+  .marca{
+    font-family:var(--display);
+    font-size:1.3rem;
+    font-weight:600;
+    color:var(--secundario);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
 
-.logo-marca{
-  height:36px;
-  width:auto;
-  display:block;
-}
+  .logo-marca{
+    height:36px;
+    width:auto;
+    display:block;
+  }
 
   .marca span{color:var(--primario);}
 
@@ -293,8 +297,7 @@
   /* ============ VITRINA ============ */
   .rejilla-vitrina{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
-    grid-auto-rows:200px;
+    grid-template-columns:repeat(3,1fr);
     gap:14px;
   }
 
@@ -305,6 +308,17 @@
     display:flex;
     align-items:flex-end;
     padding:18px;
+    aspect-ratio:4/3;
+    background:var(--apoyo);
+  }
+
+  .pieza-vitrina img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:0;
   }
 
   .pieza-vitrina span{
@@ -317,15 +331,9 @@
   .pieza-vitrina::after{
     content:"";
     position:absolute;inset:0;
-    background:linear-gradient(0deg, rgba(0,0,0,0.45), rgba(0,0,0,0));
+    background:linear-gradient(0deg, rgba(0,0,0,0.55), rgba(0,0,0,0) 60%);
     z-index:1;
   }
-
-  .pieza-vitrina.g1{grid-column:span 2;grid-row:span 2;background:linear-gradient(150deg,var(--primario),var(--primario-oscuro));}
-  .pieza-vitrina.g2{background:linear-gradient(150deg,var(--secundario),var(--secundario-oscuro));}
-  .pieza-vitrina.g3{background:linear-gradient(150deg,var(--acento),var(--acento-oscuro));}
-  .pieza-vitrina.g4{grid-row:span 2;background:linear-gradient(200deg,var(--apoyo-oscuro),#2C1060);}
-  .pieza-vitrina.g5{background:linear-gradient(150deg,var(--apoyo),#4C4F49);}
 
   /* ============ PORTAFOLIO ============ */
   .lista-portafolio{border-top:1px solid var(--linea);}
@@ -438,8 +446,7 @@
 
     #quienes-somos .contenido{grid-template-columns:1fr;}
     .rejilla-producto{grid-template-columns:1fr;}
-    .rejilla-vitrina{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px;}
-    .pieza-vitrina.g1,.pieza-vitrina.g4{grid-column:span 1;}
+    .rejilla-vitrina{grid-template-columns:1fr;}
 
     .proyecto{grid-template-columns:1fr;gap:6px;}
     .disposicion-contacto{grid-template-columns:1fr;gap:44px;}
