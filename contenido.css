@@ -138,11 +138,14 @@ nav a{
     transition:width .25s ease;
   }
 
-  nav a:hover::after,
-  nav a:focus-visible::after{width:100%;}
+  nav a{
+    background-size:100% 0%;
+  }
+
   nav a:hover,
   nav a:focus-visible{
-    color:var(--primario);
+    background-size:100% 100%;
+    color:var(--texto);
   }
 
   .btn-menu{
@@ -615,8 +618,9 @@ nav a{
     }
     nav.abierto{max-height:380px;}
     nav ul{flex-direction:column;gap:0;padding:8px 32px 20px;}
+>>>>>>> 53712e0af4b5b8abaa8309159229d3b8f8085db2
     nav ul li{border-top:1px solid var(--linea);}
-    nav ul li a{display:block;padding:14px 0;}
+    nav ul li a{display:block;padding:14px 12px;}
     .btn-menu{display:flex;}
 
     .hero{grid-template-columns:1fr;}
@@ -625,6 +629,10 @@ nav a{
     #quienes-somos .contenido{grid-template-columns:1fr;}
     .rejilla-mvv{grid-template-columns:1fr;gap:44px;}
     .rejilla-producto{grid-template-columns:1fr;}
+
+    .carrusel-pista{aspect-ratio:4/3;}
+    .carrusel-flecha{width:36px;height:36px;font-size:1.3rem;}
+
 
     .carrusel-pista{aspect-ratio:4/3;}
     .carrusel-flecha{width:36px;height:36px;font-size:1.3rem;}
