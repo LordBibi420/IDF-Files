@@ -92,18 +92,41 @@
 
   .marca span{color:var(--primario);}
 
-  nav ul{
-    display:flex;
-    gap:36px;
-  }
+  .barra-nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:20px 32px;
+  max-width:1180px;
+  margin:0 auto;
+}
 
- nav a{
-    font-size:0.95rem;
-    color:var(--texto);
-    position:relative;
-    padding:4px 0;
-    transition:color .25s ease;
-  }
+.marca{
+  font-family:var(--display);
+  font-size:1.3rem;
+  font-weight:600;
+  color:var(--secundario);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+  white-space:nowrap;
+}
+
+nav ul{
+  display:flex;
+  gap:24px;
+}
+
+nav a{
+  font-size:0.9rem;
+  white-space:nowrap;
+  color:var(--texto);
+  position:relative;
+  padding:4px 0;
+  transition:color .25s ease;
+}
 
   nav a::after{
     content:"";
@@ -345,6 +368,94 @@
     font-size:1.1rem;
   }
 
+  /* ============ TECNOLOGÍA — CARRUSEL ============ */
+  .carrusel{
+    position:relative;
+  }
+
+  .carrusel-pista{
+    position:relative;
+    aspect-ratio:16/9;
+    border-radius:var(--radio);
+    overflow:hidden;
+    background:var(--apoyo);
+  }
+
+  .carrusel-item{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .7s ease;
+  }
+
+  .carrusel-item.activo{
+    opacity:1;
+    visibility:visible;
+  }
+
+  .carrusel-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .carrusel-item figcaption{
+    position:absolute;
+    left:24px;
+    bottom:24px;
+    background:var(--fondo-suave);
+    color:var(--secundario);
+    padding:10px 16px;
+    font-size:0.85rem;
+    font-family:var(--display);
+    border-radius:var(--radio);
+  }
+
+  .carrusel-flecha{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:44px;
+    height:44px;
+    border:none;
+    border-radius:50%;
+    background:rgba(248,248,245,0.85);
+    color:var(--secundario);
+    font-size:1.6rem;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background .2s ease;
+    z-index:3;
+  }
+
+  .carrusel-flecha:hover{background:var(--fondo-suave);}
+  .carrusel-anterior{left:16px;}
+  .carrusel-siguiente{right:16px;}
+
+  .carrusel-puntos{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:22px;
+  }
+
+  .punto{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    border:1px solid var(--secundario);
+    background:transparent;
+    padding:0;
+    cursor:pointer;
+    transition:background .2s ease;
+  }
+
+  .punto.activo{background:var(--secundario);}
+
   /* ============ VITRINA ============ */
   .rejilla-vitrina{
     display:grid;
@@ -476,6 +587,22 @@
   }
 
   /* ============ RESPONSIVE ============ */
+  @media (max-width:1120px){
+  nav{
+    position:fixed;
+    top:65px;left:0;right:0;
+    background:var(--fondo-suave);
+    border-bottom:1px solid var(--linea);
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .3s ease;
+  }
+  nav.abierto{max-height:420px;}
+  nav ul{flex-direction:column;gap:0;padding:8px 32px 20px;}
+  nav ul li{border-top:1px solid var(--linea);}
+  nav ul li a{display:block;padding:14px 0;}
+  .btn-menu{display:flex;}
+}
   @media (max-width:880px){
     nav{
       position:fixed;
@@ -486,7 +613,7 @@
       overflow:hidden;
       transition:max-height .3s ease;
     }
-    nav.abierto{max-height:340px;}
+    nav.abierto{max-height:380px;}
     nav ul{flex-direction:column;gap:0;padding:8px 32px 20px;}
     nav ul li{border-top:1px solid var(--linea);}
     nav ul li a{display:block;padding:14px 0;}
@@ -498,6 +625,10 @@
     #quienes-somos .contenido{grid-template-columns:1fr;}
     .rejilla-mvv{grid-template-columns:1fr;gap:44px;}
     .rejilla-producto{grid-template-columns:1fr;}
+
+    .carrusel-pista{aspect-ratio:4/3;}
+    .carrusel-flecha{width:36px;height:36px;font-size:1.3rem;}
+
     .rejilla-vitrina{grid-template-columns:1fr;}
 
     .proyecto{grid-template-columns:1fr;gap:6px;}
