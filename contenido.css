@@ -94,32 +94,33 @@
 
   nav ul{
     display:flex;
-    gap:36px;
+    gap:8px;
   }
 
- nav a{
+  /* Resaltado tipo "iluminación": recuadro con gradiente,
+     sólido abajo y transparente hacia arriba */
+  nav a{
+    display:block;
     font-size:0.95rem;
     color:var(--texto);
-    position:relative;
-    padding:4px 0;
-    transition:color .25s ease;
+    padding:8px 16px;
+    border-radius:var(--radio);
+    background:linear-gradient(to top, var(--acento) 0%, transparent 100%);
+    background-size:100% 100%;
+    background-position:bottom;
+    background-repeat:no-repeat;
+    opacity:1;
+    transition:background-size .25s ease, color .2s ease;
   }
 
-  nav a::after{
-    content:"";
-    position:absolute;
-    left:0;bottom:0;
-    width:0;
-    height:1px;
-    background:var(--primario);
-    transition:width .25s ease;
+  nav a{
+    background-size:100% 0%;
   }
 
-  nav a:hover::after,
-  nav a:focus-visible::after{width:100%;}
   nav a:hover,
   nav a:focus-visible{
-    color:var(--primario);
+    background-size:100% 100%;
+    color:var(--texto);
   }
 
   .btn-menu{
@@ -436,9 +437,9 @@
       transition:max-height .3s ease;
     }
     nav.abierto{max-height:340px;}
-    nav ul{flex-direction:column;gap:0;padding:8px 32px 20px;}
+    nav ul{flex-direction:column;gap:0;padding:8px 20px 20px;}
     nav ul li{border-top:1px solid var(--linea);}
-    nav ul li a{display:block;padding:14px 0;}
+    nav ul li a{display:block;padding:14px 12px;}
     .btn-menu{display:flex;}
 
     .hero{grid-template-columns:1fr;}
