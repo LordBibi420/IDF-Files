@@ -28,7 +28,9 @@
       <ul>
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#quienes-somos">Quiénes somos</a></li>
+        <li><a href="#mvv">Misión y Valores</a></li>
         <li><a href="#producto">Producto</a></li>
+        <li><a href="#tecnologia">Tecnología</a></li>
         <li><a href="#vitrina">Vitrina</a></li>
         <li><a href="#portafolio">Portafolio</a></li>
         <li><a href="#contacto">Contacto</a></li>
@@ -79,6 +81,52 @@
     </div>
   </section>
 
+  <!-- MISIÓN, VISIÓN Y VALORES -->
+  <section id="mvv">
+    <div class="envolvente">
+      <div class="cabecera-seccion">
+        <h2>Misión, Visión y Valores</h2>
+        <p>Los principios que guían cada módulo que construimos y cada comunidad que acompañamos.</p>
+      </div>
+      <div class="rejilla-mvv">
+
+        <article class="tarjeta-mvv">
+          <div class="imagen-mvv">
+            <img src="img/mvv-mision.jpg" alt="Módulo hidropónico Atalaya en funcionamiento con hortalizas en recirculación de agua">
+          </div>
+          <div class="marca-linea"></div>
+          <h3>Misión</h3>
+          <p>Desarrollar e implementar soluciones de agricultura urbana inteligente mediante módulos hidropónicos automatizados y monitoreados por software, transformando espacios residenciales en entornos sostenibles que promuevan el autocultivo eficiente, el cuidado del medio ambiente y la integración comunitaria.</p>
+        </article>
+
+        <article class="tarjeta-mvv">
+          <div class="imagen-mvv">
+            <img src="img/mvv-vision.jpg" alt="Propuesta de jardín vertical hidropónico en columna de concreto para plazoleta exterior">
+          </div>
+          <div class="marca-linea"></div>
+          <h3>Visión</h3>
+          <p>Para el año 2031, posicionarnos como el proyecto líder en automatización de agricultura urbana comunitaria en el Valle de Aburrá, expandiendo nuestra tecnología hidropónica e inspirando a más comunidades a adoptar modelos sostenibles e inteligentes de producción de alimentos.</p>
+        </article>
+
+        <article class="tarjeta-mvv">
+          <div class="imagen-mvv">
+            <img src="img/mvv-valores.jpg" alt="Ilustración de sostenibilidad ambiental con energías limpias y ciudad verde">
+          </div>
+          <div class="marca-linea"></div>
+          <h3>Valores</h3>
+          <ul class="lista-valores">
+            <li><strong>Sostenibilidad</strong> — uso eficiente del agua y los nutrientes mediante recirculación.</li>
+            <li><strong>Innovación tecnológica</strong> — sensores y software al alcance de toda la comunidad.</li>
+            <li><strong>Compromiso social</strong> — espacios de integración y aprendizaje compartido.</li>
+            <li><strong>Responsabilidad</strong> — rigor ético en la operación de módulos y plataforma.</li>
+            <li><strong>Transparencia</strong> — gestión clara de datos, recursos y comunicación.</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
   <!-- PRODUCTO -->
   <section id="producto">
     <div class="envolvente">
@@ -107,6 +155,42 @@
           <p>Aplicación móvil y panel de control para la gestión y seguimiento del cultivo en comunidad.</p>
           <span class="precio">Software Integrado</span>
         </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECNOLOGÍA — BANNER ROTATIVO -->
+  <section id="tecnologia">
+    <div class="envolvente">
+      <div class="cabecera-seccion">
+        <h2>Tecnología en detalle</h2>
+        <p>Los componentes que hacen posible la automatización del módulo Atalaya: carga solar, prototipos en campo y riego inteligente.</p>
+      </div>
+
+      <div class="carrusel" id="carrusel" role="region" aria-label="Galería de tecnología Atalaya">
+        <div class="carrusel-pista">
+          <figure class="carrusel-item activo">
+            <img src="img/banner-sistema-solar.jpg" alt="Componentes del sistema de carga solar del módulo Atalaya: batería sellada y controlador de carga solar">
+            <figcaption>Sistema de carga solar</figcaption>
+          </figure>
+          <figure class="carrusel-item">
+            <img src="img/banner-prototipos.jpg" alt="Prototipos de torres hidropónicas Atalaya instaladas en una terraza">
+            <figcaption>Prototipos en campo</figcaption>
+          </figure>
+          <figure class="carrusel-item">
+            <img src="img/banner-sistema-riego.jpg" alt="Componentes del sistema de riego automatizado: controlador temporizado y bomba de agua">
+            <figcaption>Sistema de riego automatizado</figcaption>
+          </figure>
+        </div>
+
+        <button class="carrusel-flecha carrusel-anterior" id="carruselAnterior" aria-label="Imagen anterior">‹</button>
+        <button class="carrusel-flecha carrusel-siguiente" id="carruselSiguiente" aria-label="Imagen siguiente">›</button>
+
+        <div class="carrusel-puntos" id="carruselPuntos">
+          <button class="punto activo" data-indice="0" aria-label="Ver imagen 1: Sistema de carga solar"></button>
+          <button class="punto" data-indice="1" aria-label="Ver imagen 2: Prototipos en campo"></button>
+          <button class="punto" data-indice="2" aria-label="Ver imagen 3: Sistema de riego automatizado"></button>
+        </div>
       </div>
     </div>
   </section>
@@ -233,6 +317,53 @@
     alert('Mensaje enviado. Te contactaremos pronto.');
     e.target.reset();
   });
+
+  /* ============ CARRUSEL DE TECNOLOGÍA ============ */
+  (function () {
+    const carrusel = document.getElementById('carrusel');
+    if (!carrusel) return;
+
+    const items = carrusel.querySelectorAll('.carrusel-item');
+    const puntos = carrusel.querySelectorAll('.punto');
+    const btnAnterior = document.getElementById('carruselAnterior');
+    const btnSiguiente = document.getElementById('carruselSiguiente');
+    const totalItems = items.length;
+    let indiceActual = 0;
+    let temporizador = null;
+    const INTERVALO = 5000;
+
+    function mostrarIndice(indice) {
+      indiceActual = (indice + totalItems) % totalItems;
+      items.forEach((item, idx) => item.classList.toggle('activo', idx === indiceActual));
+      puntos.forEach((punto, idx) => punto.classList.toggle('activo', idx === indiceActual));
+    }
+
+    function siguiente() { mostrarIndice(indiceActual + 1); }
+    function anterior() { mostrarIndice(indiceActual - 1); }
+
+    function iniciarAutoplay() {
+      detenerAutoplay();
+      temporizador = setInterval(siguiente, INTERVALO);
+    }
+    function detenerAutoplay() {
+      if (temporizador) clearInterval(temporizador);
+    }
+
+    puntos.forEach(punto => {
+      punto.addEventListener('click', () => {
+        mostrarIndice(parseInt(punto.dataset.indice, 10));
+        iniciarAutoplay();
+      });
+    });
+
+    btnSiguiente.addEventListener('click', () => { siguiente(); iniciarAutoplay(); });
+    btnAnterior.addEventListener('click', () => { anterior(); iniciarAutoplay(); });
+
+    carrusel.addEventListener('mouseenter', detenerAutoplay);
+    carrusel.addEventListener('mouseleave', iniciarAutoplay);
+
+    iniciarAutoplay();
+  })();
 </script>
 
 </body>

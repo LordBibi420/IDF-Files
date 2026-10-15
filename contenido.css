@@ -267,6 +267,57 @@
     font-weight:500;
   }
 
+  /* ============ MISIÓN, VISIÓN Y VALORES ============ */
+  .rejilla-mvv{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:32px;
+  }
+
+  .tarjeta-mvv{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .tarjeta-mvv .imagen-mvv{
+    aspect-ratio:4/3;
+    border-radius:var(--radio);
+    overflow:hidden;
+    background:var(--apoyo);
+    margin-bottom:22px;
+  }
+
+  .tarjeta-mvv .imagen-mvv img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .tarjeta-mvv .marca-linea{
+    width:34px;height:2px;
+    background:var(--acento);
+    margin-bottom:16px;
+  }
+
+  .tarjeta-mvv h3{font-size:1.2rem;margin-bottom:12px;}
+
+  .tarjeta-mvv p{
+    color:var(--texto-suave);
+    font-size:0.95rem;
+  }
+
+  .lista-valores li{
+    color:var(--texto-suave);
+    font-size:0.92rem;
+    padding:10px 0;
+    border-top:1px solid var(--linea);
+  }
+  .lista-valores li:first-child{border-top:none;padding-top:0;}
+  .lista-valores li strong{
+    color:var(--texto);
+    font-weight:600;
+  }
+
   /* ============ PRODUCTO ============ */
   .rejilla-producto{
     display:grid;
@@ -294,6 +345,94 @@
     color:var(--secundario);
     font-size:1.1rem;
   }
+
+  /* ============ TECNOLOGÍA — CARRUSEL ============ */
+  .carrusel{
+    position:relative;
+  }
+
+  .carrusel-pista{
+    position:relative;
+    aspect-ratio:16/9;
+    border-radius:var(--radio);
+    overflow:hidden;
+    background:var(--apoyo);
+  }
+
+  .carrusel-item{
+    position:absolute;
+    inset:0;
+    opacity:0;
+    visibility:hidden;
+    transition:opacity .7s ease;
+  }
+
+  .carrusel-item.activo{
+    opacity:1;
+    visibility:visible;
+  }
+
+  .carrusel-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+
+  .carrusel-item figcaption{
+    position:absolute;
+    left:24px;
+    bottom:24px;
+    background:var(--fondo-suave);
+    color:var(--secundario);
+    padding:10px 16px;
+    font-size:0.85rem;
+    font-family:var(--display);
+    border-radius:var(--radio);
+  }
+
+  .carrusel-flecha{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    width:44px;
+    height:44px;
+    border:none;
+    border-radius:50%;
+    background:rgba(248,248,245,0.85);
+    color:var(--secundario);
+    font-size:1.6rem;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background .2s ease;
+    z-index:3;
+  }
+
+  .carrusel-flecha:hover{background:var(--fondo-suave);}
+  .carrusel-anterior{left:16px;}
+  .carrusel-siguiente{right:16px;}
+
+  .carrusel-puntos{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-top:22px;
+  }
+
+  .punto{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    border:1px solid var(--secundario);
+    background:transparent;
+    padding:0;
+    cursor:pointer;
+    transition:background .2s ease;
+  }
+
+  .punto.activo{background:var(--secundario);}
 
   /* ============ VITRINA ============ */
   .rejilla-vitrina{
@@ -436,8 +575,13 @@
       overflow:hidden;
       transition:max-height .3s ease;
     }
+<<<<<<< HEAD
     nav.abierto{max-height:340px;}
     nav ul{flex-direction:column;gap:0;padding:8px 20px 20px;}
+=======
+    nav.abierto{max-height:380px;}
+    nav ul{flex-direction:column;gap:0;padding:8px 32px 20px;}
+>>>>>>> 53712e0af4b5b8abaa8309159229d3b8f8085db2
     nav ul li{border-top:1px solid var(--linea);}
     nav ul li a{display:block;padding:14px 12px;}
     .btn-menu{display:flex;}
@@ -446,7 +590,12 @@
     .hero-imagen{order:-1;aspect-ratio:16/10;}
 
     #quienes-somos .contenido{grid-template-columns:1fr;}
+    .rejilla-mvv{grid-template-columns:1fr;gap:44px;}
     .rejilla-producto{grid-template-columns:1fr;}
+
+    .carrusel-pista{aspect-ratio:4/3;}
+    .carrusel-flecha{width:36px;height:36px;font-size:1.3rem;}
+
     .rejilla-vitrina{grid-template-columns:1fr;}
 
     .proyecto{grid-template-columns:1fr;gap:6px;}
