@@ -55,10 +55,15 @@
           <a href="#contacto" class="boton boton-contorno">Solicitar información</a>
         </div>
       </div>
-      <div class="hero-imagen">
-        <span class="etiqueta">Módulo Atalaya — Recirculación Inteligente</span>
-      </div>
-    </div>
+      <div class="hero-video">
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/5aKEfloh9iU?rel=0&playsinline=1"
+    title="Video del proyecto ADMCT HydroSmart Community"
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe>
+</div>
   </section>
 
   <!-- QUIENES SOMOS -->
@@ -170,6 +175,30 @@
           <img src="img/proyecto-modulo-lateral.jpg" alt="Prototipo del módulo hidropónico Atalaya, vista lateral con esquejes sembrados">
           <span>Módulo Atalaya con esquejes sembrados</span>
         </div>
+        <div class="pieza-vitrina">
+  <img src="img/proyecto-04.jpg" alt="Descripción de lo que muestra la foto" loading="lazy">
+  <span>Texto corto que aparece sobre la foto</span>
+</div>
+<div class="pieza-vitrina">
+  <img src="img/proyecto-04.jpg" alt="Descripción de lo que muestra la foto" loading="lazy">
+  <span>Texto corto que aparece sobre la foto</span>
+</div>
+<div class="pieza-vitrina">
+  <img src="img/proyecto-04.jpg" alt="Descripción de lo que muestra la foto" loading="lazy">
+  <span>Texto corto que aparece sobre la foto</span>
+</div>
+<div class="pieza-vitrina">
+  <img src="img/proyecto-04.jpg" alt="Descripción de lo que muestra la foto" loading="lazy">
+  <span>Texto corto que aparece sobre la foto</span>
+</div>
+<div class="pieza-vitrina">
+  <img src="img/proyecto-04.jpg" alt="Descripción de lo que muestra la foto" loading="lazy">
+  <span>Texto corto que aparece sobre la foto</span>
+</div>
+<div class="pieza-vitrina">
+  <img src="img/proyecto-04.jpg" alt="Descripción de lo que muestra la foto" loading="lazy">
+  <span>Texto corto que aparece sobre la foto</span>
+</div>
       </div>
     </div>
   </section>
@@ -214,14 +243,15 @@
         <p>Contáctanos para conocer más sobre los módulos y cómo llevarlos a tu comunidad.</p>
       </div>
       <div class="disposicion-contacto">
-        <form id="formContacto" novalidate>
+                <form id="formContacto" novalidate>
+          <input type="hidden" name="_subject" value="Nuevo mensaje desde la página ADMCT HydroSmart">
           <div class="campo">
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" name="nombre" required>
           </div>
           <div class="campo">
             <label for="correo">Correo</label>
-            <input type="email" id="correo" name="correo" required>
+            <input type="email" id="correo" name="email" required>
           </div>
           <div class="campo">
             <label for="mensaje">Cuéntanos tu proyecto</label>
@@ -271,18 +301,35 @@
     });
   });
 
-  document.getElementById('formContacto').addEventListener('submit', (e) => {
+ const formContacto = document.getElementById('formContacto');
+const botonEnviar = formContacto.querySelector('button[type="submit"]');
+
+formContacto.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const nombre = document.getElementById('nombre').value.trim();
-  const correo = document.getElementById('correo').value.trim();
-  const mensaje = document.getElementById('mensaje').value.trim();
-  if (!nombre || !mensaje) {
-    alert('Escribe tu nombre y tu mensaje.');
+  if (!formContacto.checkValidity()) {
+    formContacto.reportValidity();
     return;
   }
-  const texto = `Hola, soy ${nombre}${correo ? ' (' + correo + ')' : ''}. ${mensaje}`;
-  window.open('https://wa.me/573235592748?text=' + encodeURIComponent(texto), '_blank', 'noopener');
-  e.target.reset();
+
+  const textoOriginal = botonEnviar.textContent;
+  botonEnviar.disabled = true;
+  botonEnviar.textContent = 'Enviando...';
+
+  try {
+    const respuesta = await fetch('https://formspree.io/f/mljjrarg', {
+      method: 'POST',
+      headers: { Accept: 'application/json' },
+      body: new FormData(formContacto)
+    });
+    if (!respuesta.ok) throw new Error('Error de envío');
+    alert('Mensaje enviado. Te contactaremos pronto.');
+    formContacto.reset();
+  } catch (error) {
+    alert('No pudimos enviar el mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.');
+  } finally {
+    botonEnviar.disabled = false;
+    botonEnviar.textContent = textoOriginal;
+  }
 });
 
   /* ============ CARRUSEL DE TECNOLOGÍA ============ */
