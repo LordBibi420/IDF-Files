@@ -324,18 +324,6 @@ nav a:focus-visible{
     font-size:0.95rem;
   }
 
-  .lista-valores li{
-    color:var(--texto-suave);
-    font-size:0.92rem;
-    padding:10px 0;
-    border-top:1px solid var(--linea);
-  }
-  .lista-valores li:first-child{border-top:none;padding-top:0;}
-  .lista-valores li strong{
-    color:var(--texto);
-    font-weight:600;
-  }
-
   /* ============ PRODUCTO ============ */
   .rejilla-producto{
     display:grid;
@@ -583,7 +571,7 @@ nav a:focus-visible{
   }
 
   /* ============ RESPONSIVE ============ */
-  @media (max-width:1120px){
+  @media (max-width:1280px){
   nav{
     position:fixed;
     top:65px;left:0;right:0;
@@ -593,7 +581,7 @@ nav a:focus-visible{
     overflow:hidden;
     transition:max-height .3s ease;
   }
-  nav.abierto{max-height:420px;}
+  nav.abierto{max-height:640px;}
   nav ul{flex-direction:column;gap:0;padding:8px 32px 20px;}
   nav ul li{border-top:1px solid var(--linea);}
   nav ul li a{display:block;padding:14px 0;}
@@ -609,7 +597,7 @@ nav a:focus-visible{
       overflow:hidden;
       transition:max-height .3s ease;
     }
-    nav.abierto{max-height:380px;}
+    nav.abierto{max-height:640px;}
     nav ul{flex-direction:column;gap:0;padding:8px 32px 20px;}
     nav ul li{border-top:1px solid var(--linea);}
     nav ul li a{display:block;padding:14px 0;}
@@ -636,3 +624,12 @@ nav a:focus-visible{
     html{scroll-behavior:auto;}
     *{transition:none !important;}
   }
+  
+  #contacto .boton-wa{
+  display:inline-block;
+  margin-top:28px;
+  background:#25D366;
+  border-color:#25D366;
+  color:#073B1D;
+}
+#contacto .boton-wa:hover{background:#1EBE5A;border-color:#1EBE5A;}

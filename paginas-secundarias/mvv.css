@@ -1,0 +1,31 @@
+/* Se carga DESPUÉS de contenido.css: usa sus variables (colores, tipografías, radio) */
+.hero-mvv{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;padding-top:72px;padding-bottom:40px}
+.hero-mvv h1{font-size:clamp(2.6rem,6vw,4.2rem);line-height:1.05;margin-bottom:22px}
+.lead{color:var(--texto-suave);font-size:1.05rem;max-width:54ch}
+nav a[aria-current]{background-size:100% 100%}
+.foto{position:relative;margin:0;transition:transform .15s}
+.foto::before{content:"";position:absolute;inset:0;background:var(--acento);border-radius:var(--radio);transform:translate(14px,14px) rotate(2deg)}
+.foto img{position:relative;width:100%;height:auto;border-radius:var(--radio);box-shadow:0 14px 34px rgba(28,32,29,.22)}
+.cards{display:grid;gap:12px;margin-top:30px}
+.card{background:#fff;border:1px solid var(--linea);border-left:6px solid var(--primario);border-radius:var(--radio)}
+.card:nth-child(2){border-left-color:var(--secundario)}
+.card:nth-child(3){border-left-color:var(--acento)}
+.card:nth-child(4){border-left-color:var(--apoyo-oscuro)}
+.card:nth-child(5){border-left-color:var(--apoyo)}
+.card h3{font-size:1.15rem}
+.card button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:12px;align-items:center;width:100%;padding:16px 20px;font:inherit;font-family:var(--display);font-size:1.15rem;color:var(--secundario)}
+.card button:hover{background:var(--fondo-suave)}
+.card button:focus-visible{outline:2px solid var(--primario);outline-offset:-2px}
+.card button::after{content:"+";margin-left:auto;font-size:1.6rem;transition:transform .25s}
+.card[data-abierto] button::after{transform:rotate(45deg)}
+.cuerpo{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s}
+.card[data-abierto] .cuerpo{grid-template-rows:1fr}
+.cuerpo p{overflow:hidden;margin:0;padding:0 20px;color:var(--texto-suave);font-size:.95rem}
+.card[data-abierto] .cuerpo p{padding-bottom:18px}
+.tiempo{margin-top:30px;padding:20px;border:1px dashed var(--secundario);border-radius:var(--radio);background:#fff}
+.tiempo label{font-size:.9rem;color:var(--texto-suave)}
+.tiempo output{display:block;font:2.6rem var(--display);color:var(--primario);margin:4px 0 8px}
+.tiempo input{width:100%;accent-color:var(--primario)}
+.foto.vivo img{filter:grayscale(calc(1 - var(--p,0))) saturate(calc(.6 + var(--p,0) * .6))}
+.sig{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:24px;padding-bottom:72px}
+@media(max-width:880px){.hero-mvv{grid-template-columns:1fr;gap:40px;padding-top:40px}.foto{order:-1;margin-right:14px}}
