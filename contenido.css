@@ -441,45 +441,45 @@ nav a:focus-visible{
   .punto.activo{background:var(--secundario);}
 
   /* ============ VITRINA ============ */
-  .rejilla-vitrina{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;
-  }
+ .rejilla-vitrina{
+  display:block;
+  column-count:3;
+  column-gap:14px;
+}
+.pieza-vitrina{
+  position:relative;          /* esta línea faltaba */
+  display:block;
+  overflow:hidden;            /* y esta también */
+  break-inside:avoid;
+  margin-bottom:14px;
+  border-radius:var(--radio);
+  background:var(--apoyo);
+}
+.pieza-vitrina img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.pieza-vitrina::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(0deg,rgba(0,0,0,.65),rgba(0,0,0,0) 45%);
+  z-index:1;
+  pointer-events:none;
+}
+.pieza-vitrina span{
+  position:absolute;
+  left:18px;
+  right:18px;
+  bottom:16px;
+  z-index:2;
+  color:var(--fondo-suave);
+  font-size:.9rem;
+  line-height:1.35;
+}
 
-  .pieza-vitrina{
-    border-radius:var(--radio);
-    position:relative;
-    overflow:hidden;
-    display:flex;
-    align-items:flex-end;
-    padding:18px;
-    aspect-ratio:4/3;
-    background:var(--apoyo);
-  }
 
-  .pieza-vitrina img{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:0;
-  }
-
-  .pieza-vitrina span{
-    color:var(--fondo-suave);
-    font-size:0.9rem;
-    position:relative;
-    z-index:2;
-  }
-
-  .pieza-vitrina::after{
-    content:"";
-    position:absolute;inset:0;
-    background:linear-gradient(0deg, rgba(0,0,0,0.55), rgba(0,0,0,0) 60%);
-    z-index:1;
-  }
 
   /* ============ PORTAFOLIO ============ */
   .lista-portafolio{border-top:1px solid var(--linea);}
@@ -613,7 +613,9 @@ nav a:focus-visible{
     .carrusel-pista{aspect-ratio:4/3;}
     .carrusel-flecha{width:36px;height:36px;font-size:1.3rem;}
 
-    .rejilla-vitrina{grid-template-columns:1fr;}
+    .rejilla-vitrina{column-count:2;column-gap:10px;}
+    .pieza-vitrina{margin-bottom:10px;}
+    .pieza-vitrina span{font-size:.78rem;left:10px;right:10px;bottom:10px;}
 
     .proyecto{grid-template-columns:1fr;gap:6px;}
     .disposicion-contacto{grid-template-columns:1fr;gap:44px;}
@@ -652,3 +654,7 @@ nav a:focus-visible{
 @media (max-width:880px){
   .hero-video{order:-1;width:min(100%,300px);}
 }
+
+   .barra-cotizacion{display:flex;justify-content:center;padding:28px 32px;background:var(--fondo);border-bottom:1px solid var(--linea);}
+   .boton-cotizacion{font-weight:600;letter-spacing:.08em;padding:15px 44px;background:var(--primario);border-color:var(--primario);}
+   .boton-cotizacion:hover{background:var(--primario-oscuro);border-color:var(--primario-oscuro);}

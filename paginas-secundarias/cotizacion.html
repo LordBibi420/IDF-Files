@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cotización — ADMCT HydroSmart Community</title>
+<link rel="icon" href="../img/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== 1. COLORES Y LETRAS (los mismos de la página principal) ===== */
+:root{
+  --verde:#2E7D32; --verde-osc:#1F5C23;
+  --azul:#0611A2;  --sol:#FBC02D;
+  --texto:#1C201D; --suave:#5B605C;
+  --linea:rgba(28,32,29,.14);
+  --display:'ADLaM Display',Georgia,serif;
+  --sans:'Poppins',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+body{font-family:var(--sans);color:var(--texto);line-height:1.5;padding:24px 16px 48px;
+  background:linear-gradient(180deg,#E3F1E3 0,#F8F8F5 340px)}
+.pagina{max-width:980px;margin:0 auto}
+
+/* ===== 2. ENCABEZADO CON ICONOS (planta, agua, sol) ===== */
+.encabezado{text-align:center;margin-bottom:28px}
+.iconos{display:flex;justify-content:center;gap:14px;margin-bottom:10px}
+.iconos svg{width:34px;height:34px}
+h1{font-family:var(--display);font-weight:400;color:var(--azul);font-size:clamp(2rem,5vw,2.9rem);line-height:1.1}
+.encabezado p{color:var(--suave);margin-top:8px}
+.volver{display:inline-block;margin-bottom:14px;font-size:.9rem;color:var(--verde-osc);text-decoration:none;border-bottom:2px solid var(--sol)}
+
+/* ===== 3. TARJETAS (formulario a la izquierda, cotización a la derecha) ===== */
+.tablero{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.tarjeta{background:#fff;border:1px solid var(--linea);border-radius:6px;padding:28px;box-shadow:0 10px 28px rgba(28,32,29,.08)}
+.formulario{border-top:5px solid var(--sol)}
+.resultado{border-top:5px solid var(--verde)}
+h2{font-family:var(--display);font-weight:400;color:var(--azul);font-size:1.4rem;margin-bottom:18px}
+
+.campo{margin-bottom:18px}
+label,.etiqueta{display:block;font-size:.85rem;color:var(--suave);margin-bottom:6px}
+input,select{width:100%;font:inherit;padding:11px 12px;border:1px solid var(--linea);border-radius:4px;background:#fff;color:var(--texto)}
+input:focus,select:focus{outline:2px solid var(--verde);outline-offset:1px}
+.precio-unitario{font-family:var(--display);font-size:1.5rem;color:var(--verde-osc);padding:8px 0;border-bottom:2px dashed var(--linea)}
+
+.aviso{background:#FFF8E1;border-left:5px solid var(--sol);padding:14px 16px;margin-bottom:18px;font-size:.92rem;border-radius:0 4px 4px 0}
+.error{color:#B3261E;font-size:.9rem;margin-bottom:14px;min-height:1.3em}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pista{font-size:.78rem;color:var(--suave);margin:-6px 0 18px}
+.estado{font-size:.9rem;margin-bottom:14px}
+.estado.ok{color:var(--verde-osc);font-weight:500}
+.estado.error{color:#B3261E}
+
+.botones{display:flex;gap:12px;flex-wrap:wrap}
+.boton{font:inherit;font-weight:500;padding:12px 24px;border-radius:4px;border:1px solid var(--verde);cursor:pointer;transition:background .2s,color .2s}
+.boton-lleno{background:var(--verde);color:#fff}
+.boton-lleno:hover{background:var(--verde-osc)}
+.boton-contorno{background:#fff;color:var(--verde-osc)}
+.boton-contorno:hover{background:#E8F3E8}
+
+/* ===== 4. LA COTIZACIÓN QUE SE IMPRIME ===== */
+.vacio{color:var(--suave);text-align:center;padding:40px 10px}
+.vacio svg{width:46px;height:46px;color:var(--verde);opacity:.5;margin-bottom:8px}
+.cabecera-cot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.85rem;color:var(--suave);margin-bottom:16px}
+.fila{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--linea)}
+.fila span:first-child{color:var(--suave)}
+.fila span:last-child{font-weight:500;text-align:right}
+.regalo{margin-top:16px;padding:12px 14px;background:#E8F3E8;border-radius:4px;font-size:.9rem;color:var(--verde-osc)}
+.total{display:flex;justify-content:space-between;align-items:baseline;margin-top:18px;padding-top:14px;border-top:3px solid var(--sol)}
+.total span:last-child{font-family:var(--display);font-size:2rem;color:var(--azul)}
+.lista{margin:6px 0 18px}
+.lista ul{list-style:none;border-top:1px solid var(--linea)}
+.lista li{display:grid;grid-template-columns:1fr 72px auto 26px;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--linea);font-size:.9rem}
+.cant-linea{padding:6px 8px}
+.lista .sub{font-weight:500;text-align:right}
+.quitar{background:none;border:0;font-size:1.4rem;line-height:1;color:var(--suave);cursor:pointer}
+.quitar:hover{color:#B3261E}
+#btnAgregar{margin-bottom:20px}
+.item{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--linea)}
+.item small{display:block;color:var(--suave);font-size:.85rem}
+.item>span{font-weight:500;white-space:nowrap}
+.nota{font-size:.78rem;color:var(--suave);margin-top:14px}
+
+/* ===== 5. CELULAR E IMPRESIÓN ===== */
+@media(max-width:760px){.tablero{grid-template-columns:1fr}.dos{grid-template-columns:1fr}}
+@media print{
+  body{background:#fff;padding:0}
+  .encabezado,.formulario{display:none!important}
+  .tablero{display:block}
+  .tarjeta{border:0;box-shadow:none;padding:0}
+}
+</style>
+</head>
+<body>
+<div class="pagina">
+
+  <!-- ===== ENCABEZADO ===== -->
+  <header class="encabezado">
+    <a class="volver" id="volver" href="../index.html">← Volver al inicio</a>
+    <div class="iconos" aria-hidden="true">
+      <svg viewBox="0 0 24 24" style="color:#2E7D32"><path fill="currentColor" d="M20 4C9 4 4 9 4 15c0 2 .6 3.400 1.500 4.500C7 14 10 11 14 9c-3 2.500-5.500 5.500-6.600 10.200 1 .5 2 .8 3.100.8C17 20 20 14 20 4z"/></svg>
+      <svg viewBox="0 0 24 24" style="color:#0611A2"><path fill="currentColor" d="M12 2.500C9 7 6 10.200 6 14a6 6 0 0012 0c0-3.800-3-7-6-11.500z"/></svg>
+      <svg viewBox="0 0 24 24" style="color:#FBC02D"><circle cx="12" cy="12" r="4" fill="currentColor"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v3M12 19v3M2 12h3M19 12h3M4.900 4.900l2.100 2.100M17 17l2.100 2.100M4.900 19.100L7 17M17 7l2.100-2.100"/></svg>
+    </div>
+    <h1>Cotización</h1>
+    <p>ADMCT HydroSmart Community — sembrando tecnología, cosechando comunidad</p>
+  </header>
+
+  <div class="tablero">
+
+    <!-- ===== FORMULARIO ===== -->
+    <section class="tarjeta formulario" aria-labelledby="t-form">
+      <h2 id="t-form">Arma tu pedido</h2>
+
+      <div class="campo">
+        <label for="producto">Producto o servicio</label>
+        <select id="producto"></select>
+      </div>
+      <div class="campo">
+        <label for="cantidad">Cantidad</label>
+        <input type="number" id="cantidad" min="1" max="999" step="1" value="1" inputmode="numeric">
+      </div>
+      <div class="campo">
+        <span class="etiqueta">Precio unitario</span>
+        <div class="precio-unitario" id="precio" aria-live="polite">—</div>
+      </div>
+      <button type="button" class="boton boton-contorno" id="btnAgregar">+ Agregar al pedido</button>
+
+      <div class="lista" id="lista" hidden>
+        <span class="etiqueta">Tu pedido (puedes cambiar las cantidades)</span>
+        <ul id="items"></ul>
+      </div>
+
+      <div class="aviso" id="aviso" role="status" hidden>
+        Al adquirir el proyecto ADMCT HydroSmart Community recibes gratis un semillero de lechuga y una explicación sobre su siembra y cuidado.
+      </div>
+
+      <div class="campo">
+        <label for="cliente">Nombre</label>
+        <input type="text" id="cliente" autocomplete="name" placeholder="Aparece en la cotización">
+      </div>
+      <div class="dos">
+        <div class="campo">
+          <label for="telefono">Teléfono o WhatsApp</label>
+          <input type="tel" id="telefono" autocomplete="tel" inputmode="tel">
+        </div>
+        <div class="campo">
+          <label for="apto">Torre y apartamento</label>
+          <input type="text" id="apto" placeholder="Ej.: Torre 2, apto 301">
+        </div>
+      </div>
+      <p class="pista">Teléfono y apartamento solo se piden para enviar el pedido.</p>
+
+      <p class="error" id="error" role="alert"></p>
+      <p class="estado" id="estado" role="status"></p>
+
+      <div class="botones">
+        <button type="button" class="boton boton-lleno" id="btnCalcular">Calcular cotización</button>
+        <button type="button" class="boton boton-lleno" id="btnPedido">Solicitar pedido</button>
+        <button type="button" class="boton boton-contorno" id="btnImprimir">Imprimir cotización</button>
+      </div>
+    </section>
+
+    <!-- ===== COTIZACIÓN (resultado) ===== -->
+    <section class="tarjeta resultado" aria-labelledby="t-res" aria-live="polite">
+      <h2 id="t-res">Tu cotización</h2>
+
+      <div class="vacio" id="vacio">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20 4C9 4 4 9 4 15c0 2 .6 3.400 1.500 4.500C7 14 10 11 14 9c-3 2.500-5.500 5.500-6.600 10.200 1 .5 2 .8 3.100.8C17 20 20 14 20 4z"/></svg>
+        <p>Agrega uno o varios productos y pulsa «Calcular cotización».</p>
+      </div>
+
+      <div id="cotizacion" hidden>
+        <div class="cabecera-cot"><span id="rNumero"></span><span id="rFecha"></span></div>
+        <div class="fila" id="filaCliente"><span>Cliente</span><span id="rCliente"></span></div>
+        <div id="rItems"></div>
+        <div class="regalo" id="rRegalo" hidden></div>
+        <div class="total"><span>Valor total</span><span id="rTotal"></span></div>
+        <p class="nota">Precios en pesos colombianos (COP), sugeridos y sujetos a cambio. Unidad Residencial Atalaya de la Mota, Medellín.</p>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+/* ===== A. LISTA DE PRODUCTOS Y PRECIOS =====
+   Para cambiar un precio o agregar un producto, edita SOLO esta lista.
+   "regalo: true" marca el producto que incluye el semillero gratis. */
+const PRODUCTOS = [
+  { nombre: 'Planta de cidrón',                   precio: 7000 },
+  { nombre: 'Planta de romero',                   precio: 7000 },
+  { nombre: 'Planta de incienso',                 precio: 7000 },
+  { nombre: 'Planta de menta',                    precio: 5000 },
+  { nombre: 'Planta de lavanda',                  precio: 9000 },
+  { nombre: 'Semillero de lechuga',               precio: 3600 },
+  { nombre: 'Proyecto ADMCT HydroSmart Community', precio: 650000, regalo: true }
+];
+
+/* ===== B. HERRAMIENTAS ===== */
+const $ = id => document.getElementById(id);                       // atajo para buscar elementos
+const cop = n => new Intl.NumberFormat('es-CO', {                  // da formato de dinero: $ 7.000
+  style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(n);
+
+/* ===== C. LLENAR LA LISTA DESPLEGABLE ===== */
+$('producto').innerHTML =
+  '<option value="">Selecciona un producto…</option>' +
+  PRODUCTOS.map((p, i) => `<option value="${i}">${p.nombre}</option>`).join('');
+
+let calculada = false;   // recuerda si ya se mostró una cotización
+let numeroCot = '', fechaCot = '';   // se guardan para enviarlos con el pedido
+
+/* ===== D. EL PEDIDO: lista de productos agregados =====
+   Cada línea guarda la posición del producto en PRODUCTOS (i) y la cantidad (cant). */
+let pedido = [];
+
+const cantidadValida = c => Number.isInteger(c) && c >= 1 && c <= 999;
+
+/* Precio unitario del producto elegido */
+function actualizarPrecio() {
+  const p = PRODUCTOS[$('producto').value];
+  $('precio').textContent = p ? cop(p.precio) : '—';
+  avisoProyecto();
+}
+
+/* El aviso del semillero gratis sale si el proyecto está elegido o ya está en el pedido */
+function avisoProyecto() {
+  const elegido = PRODUCTOS[$('producto').value];
+  $('aviso').hidden = !((elegido && elegido.regalo) || pedido.some(l => PRODUCTOS[l.i].regalo));
+}
+
+/* Botón «Agregar al pedido»: suma una línea (si el producto ya estaba, suma la cantidad) */
+function agregar() {
+  const i = $('producto').value, cant = Number($('cantidad').value);
+  if (i === '') { $('error').textContent = 'Selecciona un producto o servicio.'; return false; }
+  if (!cantidadValida(cant)) { $('error').textContent = 'La cantidad debe ser un número entero entre 1 y 999.'; return false; }
+  $('error').textContent = '';
+  const linea = pedido.find(l => l.i == i);
+  if (linea) linea.cant = Math.min(999, linea.cant + cant); else pedido.push({ i: Number(i), cant });
+  $('producto').value = ''; $('cantidad').value = 1;
+  actualizarPrecio(); dibujarLista(); refrescar();
+  return true;
+}
+
+/* Dibuja la lista «Tu pedido» con cantidad editable y botón para quitar */
+function dibujarLista() {
+  $('lista').hidden = pedido.length === 0;
+  $('items').innerHTML = pedido.map((l, n) => {
+    const p = PRODUCTOS[l.i];
+    return `<li><span>${p.nombre}</span>
+      <input type="number" class="cant-linea" data-n="${n}" min="1" max="999" value="${l.cant}" aria-label="Cantidad de ${p.nombre}">
+      <span class="sub">${cop(l.cant * p.precio)}</span>
+      <button type="button" class="quitar" data-n="${n}" aria-label="Quitar ${p.nombre}">×</button></li>`;
+  }).join('');
+  avisoProyecto();
+}
+
+/* ===== E. CALCULAR LA COTIZACIÓN =====
+   Cada línea: subtotal = cantidad × precio unitario.  Valor total = suma de los subtotales.
+   El semillero gratis NO se suma. */
+function dibujarCotizacion() {
+  let total = 0, regalos = 0;
+  $('rItems').innerHTML = pedido.map(l => {
+    const p = PRODUCTOS[l.i], subtotal = l.cant * p.precio;
+    total += subtotal;
+    if (p.regalo) regalos += l.cant;           // un semillero gratis por cada proyecto
+    return `<div class="item"><div><strong>${p.nombre}</strong><small>${l.cant} × ${cop(p.precio)}</small></div><span>${cop(subtotal)}</span></div>`;
+  }).join('');
+  const cliente = $('cliente').value.trim();
+  $('filaCliente').hidden = !cliente;
+  $('rCliente').textContent = cliente;
+  $('rTotal').textContent = cop(total);
+  $('rRegalo').hidden = regalos === 0;
+  $('rRegalo').textContent = `Incluye gratis (sin costo): ${regalos} semillero${regalos > 1 ? 's' : ''} de lechuga y una explicación sobre su siembra y cuidado.`;
+  return { total, regalos };
+}
+
+/* Botón «Calcular cotización». Si el pedido está vacío, usa el producto elegido en ese momento */
+function calcular() {
+  if (pedido.length === 0 && !agregar()) return;
+  $('error').textContent = '';
+  if (!calculada) {                            // número y fecha solo la primera vez
+    const hoy = new Date();
+    numeroCot = 'COT-' + hoy.toISOString().slice(0,10).replaceAll('-','') + '-' + (Math.floor(Math.random()*900)+100);
+    fechaCot = hoy.toLocaleDateString('es-CO', { day:'2-digit', month:'long', year:'numeric' });
+    $('rNumero').textContent = 'Cotización N.° ' + numeroCot;
+    $('rFecha').textContent = fechaCot;
+  }
+  dibujarCotizacion();
+  $('vacio').hidden = true;
+  $('cotizacion').hidden = false;
+  calculada = true;
+}
+
+/* Si ya hay cotización mostrada, la mantiene al día cuando cambia el pedido */
+function refrescar() {
+  if (!calculada) return;
+  if (pedido.length === 0) { $('cotizacion').hidden = true; $('vacio').hidden = false; calculada = false; return; }
+  dibujarCotizacion();
+}
+
+/* ===== F. IMPRIMIR / GUARDAR COMO PDF ===== */
+function imprimir() {
+  if (!calculada) { $('error').textContent = 'Primero calcula la cotización.'; return; }
+  window.print();   // en la ventana de impresión elige «Guardar como PDF»
+}
+
+/* ===== G. SOLICITAR PEDIDO: envía la cotización al correo del equipo (Formspree) ===== */
+const FORMSPREE = 'https://formspree.io/f/mljjrarg';   // el mismo formulario de la página de contacto
+
+async function solicitarPedido() {
+  $('estado').textContent = ''; $('estado').className = 'estado';
+  calcular();                                    // deja la cotización al día
+  if (!calculada || $('error').textContent) return;
+
+  const nombre = $('cliente').value.trim(), tel = $('telefono').value.trim(), apto = $('apto').value.trim();
+  if (!nombre || !apto || tel.replace(/\D/g, '').length < 7) {
+    $('error').textContent = 'Para solicitar el pedido escribe tu nombre, un teléfono válido y tu torre y apartamento.';
+    return;
+  }
+
+  const { total, regalos } = dibujarCotizacion();
+  const datos = new FormData();                  // estos campos llegan al correo
+  datos.append('_subject', 'Nuevo pedido ' + numeroCot + ' — ' + nombre);
+  datos.append('numero_cotizacion', numeroCot);
+  datos.append('fecha', fechaCot);
+  datos.append('nombre', nombre);
+  datos.append('telefono', tel);
+  datos.append('apartamento', apto);
+  datos.append('pedido', pedido.map((l, n) => {
+    const p = PRODUCTOS[l.i];
+    return `${n + 1}. ${p.nombre} — ${l.cant} × ${cop(p.precio)} = ${cop(l.cant * p.precio)}`;
+  }).join('\n'));
+  datos.append('valor_total', cop(total));
+  if (regalos) datos.append('incluye_gratis', regalos + ' semillero(s) de lechuga y explicación de siembra y cuidado');
+
+  const boton = $('btnPedido'), textoBoton = boton.textContent;
+  boton.disabled = true; boton.textContent = 'Enviando...';
+  try {
+    const r = await fetch(FORMSPREE, { method: 'POST', headers: { Accept: 'application/json' }, body: datos });
+    if (!r.ok) throw new Error('Error de envío');
+    $('estado').className = 'estado ok';
+    $('estado').textContent = '¡Pedido enviado! Te contactaremos pronto al ' + tel + '.';
+  } catch (e) {
+    $('estado').className = 'estado error';
+    $('estado').textContent = 'No pudimos enviar el pedido. Inténtalo de nuevo o escríbenos por WhatsApp.';
+  } finally {
+    boton.disabled = false; boton.textContent = textoBoton;
+  }
+}
+
+/* ===== H. CONECTAR LOS BOTONES Y CAMPOS ===== */
+$('producto').addEventListener('change', actualizarPrecio);
+$('btnAgregar').addEventListener('click', agregar);
+$('btnCalcular').addEventListener('click', calcular);
+$('btnPedido').addEventListener('click', solicitarPedido);
+$('btnImprimir').addEventListener('click', imprimir);
+$('cliente').addEventListener('input', refrescar);
+$('items').addEventListener('click', e => {                 // quitar una línea
+  const b = e.target.closest('.quitar'); if (!b) return;
+  pedido.splice(Number(b.dataset.n), 1); dibujarLista(); refrescar();
+});
+$('items').addEventListener('change', e => {                // cambiar la cantidad de una línea
+  const c = e.target.closest('.cant-linea'); if (!c) return;
+  const v = Number(c.value);
+  if (cantidadValida(v)) pedido[Number(c.dataset.n)].cant = v;
+  dibujarLista(); refrescar();
+});
+
+/* Si la página está incrustada en Google Sites, se oculta el enlace «Volver al inicio» */
+if (window.self !== window.top) $('volver').hidden = true;
+</script>
+</body>
+</html>
