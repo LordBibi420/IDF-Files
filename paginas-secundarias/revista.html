@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Revista — ADMCT HydroSmart Community</title>
+
+<link rel="icon" type="image/png" sizes="180x180" href="../img/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../contenido.css">
+</head>
+<body>
+
+<header>
+  <div class="barra-nav">
+    <a href="../index.html#inicio" class="marca">
+      <img src="../img/logo.png" alt="Logo ADMCT HydroSmart Community" class="logo-marca">
+      ADMCT <span>HydroSmart</span>
+    </a>
+    <button class="btn-menu" id="btnMenu" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="navPrincipal">
+      <ul>
+        <li><a href="../index.html#inicio">Inicio</a></li>
+        <li><a href="../index.html#quienes-somos">Quiénes somos</a></li>
+        <li><a href="mision.html">Misión</a></li>
+        <li><a href="vision.html">Visión</a></li>
+        <li><a href="valores.html">Valores</a></li>
+        <li><a href="../index.html#producto">Producto</a></li>
+        <li><a href="../index.html#oferta">Oferta</a></li>
+        <li><a href="../index.html#tecnologia">Tecnología</a></li>
+        <li><a href="../index.html#vitrina">Vitrina</a></li>
+        <li><a href="../index.html#portafolio">Portafolio</a></li>
+        <li><a href="revista.html">Revista</a></li>
+        <li><a href="../index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="revista-pagina">
+    <div class="envolvente">
+      <a class="volver" href="../index.html">← Volver al inicio</a>
+      <div class="revista-intro">
+        <h1>Revista HydroSmart Community</h1>
+        <p>Un recorrido visual por el proyecto: quiénes somos, el reto, el prototipo, cómo lo medimos y cuánto cuesta. Usa las flechas, desliza, o deja que avance sola.</p>
+      </div>
+
+      <div class="visor reproduciendo" id="visor" data-intervalo="6000">
+        <div class="visor-escenario" id="escenario" role="region" aria-roledescription="carrusel" aria-label="Páginas de la revista">
+          <figure class="rev-pagina activa"><img src="../img/revista/pagina-1.webp" alt="Portada: ADMCT HydroSmart Community, torres hidropónicas verticales con energía solar, Medellín 2026"></figure>
+          <figure class="rev-pagina"><img src="../img/revista/pagina-2.webp" alt="Quiénes somos: misión y visión del proyecto" loading="lazy"></figure>
+          <figure class="rev-pagina"><img src="../img/revista/pagina-3.webp" alt="Nuestros valores: sostenibilidad, innovación tecnológica, compromiso social, responsabilidad y transparencia" loading="lazy"></figure>
+          <figure class="rev-pagina"><img src="../img/revista/pagina-4.webp" alt="El reto: espacio subutilizado, pregunta de investigación y tres objetivos" loading="lazy"></figure>
+          <figure class="rev-pagina"><img src="../img/revista/pagina-5.webp" alt="El prototipo: torre hidropónica de 1,50 m y flujo de agua y energía" loading="lazy"></figure>
+          <figure class="rev-pagina"><img src="../img/revista/pagina-6.webp" alt="Cómo lo medimos: enfoque mixto, encuesta en línea y entrevistas breves" loading="lazy"></figure>
+          <figure class="rev-pagina"><img src="../img/revista/pagina-7.webp" alt="Materiales y presupuesto del proyecto" loading="lazy"></figure>
+          <figure class="rev-pagina"><img src="../img/revista/pagina-8.webp" alt="Equipo y línea de tiempo: planificar, construir, implementar y compartir" loading="lazy"></figure>
+
+          <button class="visor-flecha visor-ant" id="ant" aria-label="Página anterior">‹</button>
+          <button class="visor-flecha visor-sig" id="sig" aria-label="Página siguiente">›</button>
+          <div class="visor-progreso" aria-hidden="true"><i id="barra"></i></div>
+        </div>
+
+        <div class="visor-barra">
+          <div>
+            <span class="visor-contador" id="contador">1 / 8</span>
+            <span class="visor-titulo" id="tituloPag">Portada</span>
+          </div>
+          <div class="visor-acciones">
+            <button type="button" class="boton" id="btnPlay" aria-pressed="true">Pausar</button>
+            <button type="button" class="boton" id="btnFull">Pantalla completa</button>
+            <a class="boton boton-lleno" href="../img/revista/HydroSmart_Community.pdf" download>Descargar PDF</a>
+          </div>
+        </div>
+
+        <div class="visor-minis" id="minis">
+          <button type="button" class="activa" aria-label="Ir a la página 1"><img src="../img/revista/mini-1.webp" alt=""></button>
+          <button type="button" aria-label="Ir a la página 2"><img src="../img/revista/mini-2.webp" alt="" loading="lazy"></button>
+          <button type="button" aria-label="Ir a la página 3"><img src="../img/revista/mini-3.webp" alt="" loading="lazy"></button>
+          <button type="button" aria-label="Ir a la página 4"><img src="../img/revista/mini-4.webp" alt="" loading="lazy"></button>
+          <button type="button" aria-label="Ir a la página 5"><img src="../img/revista/mini-5.webp" alt="" loading="lazy"></button>
+          <button type="button" aria-label="Ir a la página 6"><img src="../img/revista/mini-6.webp" alt="" loading="lazy"></button>
+          <button type="button" aria-label="Ir a la página 7"><img src="../img/revista/mini-7.webp" alt="" loading="lazy"></button>
+          <button type="button" aria-label="Ir a la página 8"><img src="../img/revista/mini-8.webp" alt="" loading="lazy"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="envolvente" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:8px;">
+    <span>© 2026 ADMCT HydroSmart Community — Sembrando tecnología, cosechando comunidad</span>
+  </div>
+</footer>
+
+<script>
+  const btnMenu = document.getElementById('btnMenu');
+  const navPrincipal = document.getElementById('navPrincipal');
+  btnMenu.addEventListener('click', () => {
+    const abierto = navPrincipal.classList.toggle('abierto');
+    btnMenu.setAttribute('aria-expanded', abierto);
+  });
+
+  /* ============ VISOR DE LA REVISTA ============ */
+  (function () {
+    const visor = document.getElementById('visor');
+    const escenario = document.getElementById('escenario');
+    const paginas = escenario.querySelectorAll('.rev-pagina');
+    const minis = document.querySelectorAll('#minis button');
+    const barra = document.getElementById('barra');
+    const contador = document.getElementById('contador');
+    const tituloPag = document.getElementById('tituloPag');
+    const btnPlay = document.getElementById('btnPlay');
+    const btnFull = document.getElementById('btnFull');
+    const titulos = ['Portada','Quiénes somos','Nuestros valores','El reto','El prototipo','Cómo lo medimos','Materiales y presupuesto','Equipo y línea de tiempo'];
+    const total = paginas.length;
+    const INTERVALO = parseInt(visor.dataset.intervalo, 10) || 6000;
+    visor.style.setProperty('--intervalo', INTERVALO + 'ms');
+
+    const reducir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let actual = 0, timer = null, reproduciendo = !reducir;
+
+    function mostrar(n) {
+      actual = (n + total) % total;
+      paginas.forEach((p, i) => {
+        p.classList.toggle('activa', i === actual);
+        p.classList.toggle('previa', i < actual);
+      });
+      minis.forEach((m, i) => m.classList.toggle('activa', i === actual));
+      contador.textContent = (actual + 1) + ' / ' + total;
+      tituloPag.textContent = titulos[actual];
+      reiniciarBarra();
+    }
+
+    function reiniciarBarra() {
+      visor.classList.remove('reproduciendo');
+      void barra.offsetWidth;                       // reinicia la animación
+      if (reproduciendo) visor.classList.add('reproduciendo');
+    }
+
+    function arrancar() {
+      clearInterval(timer);
+      if (!reproduciendo) return;
+      timer = setInterval(() => mostrar(actual + 1), INTERVALO);
+      reiniciarBarra();
+    }
+    function parar() { clearInterval(timer); visor.classList.remove('reproduciendo'); }
+
+    function ir(n) { mostrar(n); arrancar(); }
+
+    document.getElementById('sig').addEventListener('click', () => ir(actual + 1));
+    document.getElementById('ant').addEventListener('click', () => ir(actual - 1));
+    minis.forEach((m, i) => m.addEventListener('click', () => ir(i)));
+
+    btnPlay.addEventListener('click', () => {
+      reproduciendo = !reproduciendo;
+      btnPlay.textContent = reproduciendo ? 'Pausar' : 'Reproducir';
+      btnPlay.setAttribute('aria-pressed', reproduciendo);
+      reproduciendo ? arrancar() : parar();
+    });
+
+    btnFull.addEventListener('click', () => {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (visor.requestFullscreen) visor.requestFullscreen();
+    });
+
+    // teclado
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') ir(actual + 1);
+      if (e.key === 'ArrowLeft') ir(actual - 1);
+    });
+
+    // deslizar con el dedo
+    let x0 = null;
+    escenario.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    escenario.addEventListener('touchend', e => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 40) ir(actual + (dx < 0 ? 1 : -1));
+      x0 = null;
+    });
+
+    // pausa al pasar el mouse
+    escenario.addEventListener('mouseenter', () => { if (reproduciendo) parar(); });
+    escenario.addEventListener('mouseleave', () => { if (reproduciendo) arrancar(); });
+
+    if (reducir) { btnPlay.textContent = 'Reproducir'; btnPlay.setAttribute('aria-pressed', 'false'); visor.classList.remove('reproduciendo'); }
+    else arrancar();
+  })();
+</script>
+
+</body>
+</html>

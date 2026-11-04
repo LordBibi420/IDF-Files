@@ -98,7 +98,7 @@
   justify-content:space-between;
   gap:24px;
   padding:20px 32px;
-  max-width:1180px;
+  max-width:1400px;
   margin:0 auto;
 }
 
@@ -571,7 +571,7 @@ nav a:focus-visible{
   }
 
   /* ============ RESPONSIVE ============ */
-  @media (max-width:1280px){
+  @media (max-width:1500px){
   nav{
     position:fixed;
     top:65px;left:0;right:0;
@@ -658,3 +658,284 @@ nav a:focus-visible{
    .barra-cotizacion{display:flex;justify-content:center;padding:28px 32px;background:var(--fondo);border-bottom:1px solid var(--linea);}
    .boton-cotizacion{font-weight:600;letter-spacing:.08em;padding:15px 44px;background:var(--primario);border-color:var(--primario);}
    .boton-cotizacion:hover{background:var(--primario-oscuro);border-color:var(--primario-oscuro);}
+
+/* =====================================================================
+   NUEVO 1 — AFICHE DE OFERTA ANIMADO  (#oferta)
+   ===================================================================== */
+#oferta{background:var(--fondo);padding:88px 0;}
+
+.afiche{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:24px;
+  align-items:center;
+  min-height:560px;
+  padding:56px 56px 120px;
+  border-radius:var(--radio);
+  color:#fff;
+  background:linear-gradient(135deg,#0b3d1a 0%,var(--primario-oscuro) 38%,var(--primario) 68%,#0a6a8f 100%);
+  background-size:200% 200%;
+  animation:aficheFondo 14s ease-in-out infinite alternate;
+  box-shadow:0 24px 60px rgba(6,17,162,.18);
+}
+@keyframes aficheFondo{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+
+/* gotas flotantes */
+.gota{
+  position:absolute;z-index:0;
+  width:var(--t,46px);height:var(--t,46px);
+  background:radial-gradient(circle at 30% 30%,#8fd0ff,#1f7be0 60%,#0a4fb3);
+  border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);
+  opacity:.85;
+  animation:gotaFlota var(--d,7s) ease-in-out var(--r,0s) infinite;
+}
+@keyframes gotaFlota{
+  0%,100%{translate:0 0}
+  50%{translate:0 -26px}
+}
+.gota:nth-of-type(1){--t:54px;--d:7s;left:44%;top:66%}
+.gota:nth-of-type(2){--t:30px;--d:5s;--r:-2s;left:46%;top:8%}
+.gota:nth-of-type(3){--t:40px;--d:8s;--r:-4s;right:6%;top:46%}
+.gota:nth-of-type(4){--t:22px;--d:6s;--r:-1s;left:30%;top:56%}
+
+/* hojas que giran lento */
+.hoja{
+  position:absolute;z-index:0;
+  width:150px;height:150px;
+  background:rgba(255,255,255,.08);
+  border-radius:0 100% 0 100%;
+  animation:hojaGira 22s linear infinite;
+}
+.hoja.h1{left:-40px;bottom:90px}
+.hoja.h2{right:30%;top:-50px;width:110px;height:110px;animation-direction:reverse;animation-duration:30s}
+@keyframes hojaGira{to{transform:rotate(360deg)}}
+
+/* olas inferiores */
+.olas{position:absolute;left:0;right:0;bottom:0;height:96px;z-index:1;pointer-events:none;overflow:hidden}
+.olas svg{position:absolute;bottom:0;left:0;width:200%;height:100%}
+.olas .ola-1{fill:rgba(255,255,255,.28);animation:olaMueve 9s linear infinite}
+.olas .ola-2{fill:rgba(255,255,255,.55);animation:olaMueve 14s linear infinite reverse}
+.olas .ola-3{fill:var(--fondo);animation:olaMueve 20s linear infinite}
+@keyframes olaMueve{to{transform:translateX(-50%)}}
+
+.afiche-texto{position:relative;z-index:2}
+.afiche-etiqueta{
+  display:inline-block;
+  font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
+  background:var(--acento);color:var(--texto);
+  padding:7px 14px;border-radius:var(--radio);
+  margin-bottom:22px;
+  animation:pulso 2.4s ease-in-out infinite;
+}
+@keyframes pulso{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+.afiche h2{
+  color:#fff;
+  font-size:clamp(2rem,4.2vw,3.4rem);
+  line-height:1.05;
+  margin-bottom:14px;
+}
+.afiche h2 em{font-style:normal;color:var(--acento)}
+.afiche-sub{max-width:40ch;color:rgba(255,255,255,.86);margin-bottom:26px}
+
+.afiche-precios{display:flex;align-items:flex-end;gap:22px;flex-wrap:wrap;margin-bottom:24px}
+.precio-antes{display:block;font-size:.8rem;color:rgba(255,255,255,.7)}
+.precio-antes b{
+  position:relative;font-family:var(--display);font-weight:500;font-size:1.3rem;color:rgba(255,255,255,.8);
+}
+.precio-antes b::after{
+  content:"";position:absolute;left:-4px;right:-4px;top:52%;height:3px;background:var(--acento);
+  transform:scaleX(0);transform-origin:left;transition:transform .8s ease .6s;
+}
+.afiche.visible .precio-antes b::after{transform:scaleX(1)}
+.precio-ahora{font-size:.8rem;color:var(--acento);letter-spacing:.14em;text-transform:uppercase}
+.precio-ahora span{display:block}
+.precio-ahora b{
+  display:block;letter-spacing:normal;text-transform:none;
+  font-family:var(--display);font-weight:500;
+  font-size:clamp(2.6rem,6vw,4.4rem);line-height:1;color:#fff;
+  text-shadow:0 4px 0 rgba(0,0,0,.18);
+}
+
+/* hueco mientras no hay precio */
+.afiche.sin-precio .precio-ahora b{
+  display:inline-block;min-width:6ch;
+  color:transparent;border-radius:var(--radio);
+  background:linear-gradient(90deg,rgba(255,255,255,.18) 25%,rgba(255,255,255,.5) 50%,rgba(255,255,255,.18) 75%);
+  background-size:200% 100%;
+  animation:brillo 1.8s linear infinite;
+  text-shadow:none;
+}
+.afiche.sin-precio .precio-antes b{color:transparent;background:rgba(255,255,255,.2);border-radius:var(--radio);display:inline-block;min-width:5ch}
+.afiche.sin-precio .precio-antes b::after{display:none}
+@keyframes brillo{to{background-position:-200% 0}}
+
+.afiche-aviso{font-size:.82rem;color:rgba(255,255,255,.8);margin-bottom:22px;min-height:1.2em}
+
+.cuenta{display:none;gap:10px;margin-bottom:26px}
+.afiche.con-cuenta .cuenta{display:flex}
+.cuenta div{min-width:64px;text-align:center;background:rgba(255,255,255,.14);backdrop-filter:blur(4px);border-radius:var(--radio);padding:10px 8px}
+.cuenta strong{display:block;font-family:var(--display);font-weight:500;font-size:1.6rem}
+.cuenta span{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+
+.afiche .grupo-botones .boton{border-color:#fff}
+.afiche .boton-lleno{background:var(--acento);color:var(--texto);border-color:var(--acento);font-weight:600}
+.afiche .boton-lleno:hover{background:#fff;border-color:#fff}
+.afiche .boton-contorno{color:#fff}
+.afiche .boton-contorno:hover{background:#fff;color:var(--primario-oscuro)}
+
+.afiche-visual{position:relative;z-index:2;display:grid;place-items:center;min-height:380px}
+.afiche-foto{
+  width:min(100%,340px);aspect-ratio:3/4;object-fit:cover;
+  border-radius:48% 52% 46% 54% / 52% 46% 54% 48%;
+  border:6px solid rgba(255,255,255,.9);
+  box-shadow:0 22px 50px rgba(0,0,0,.35);
+  animation:fotoFlota 6s ease-in-out infinite, fotoForma 12s ease-in-out infinite;
+  background:var(--apoyo);
+}
+@keyframes fotoFlota{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-14px) rotate(1.5deg)}}
+@keyframes fotoForma{
+  0%,100%{border-radius:48% 52% 46% 54% / 52% 46% 54% 48%}
+  50%{border-radius:54% 46% 52% 48% / 46% 54% 46% 54%}
+}
+
+/* sello de descuento */
+.sello{
+  position:absolute;z-index:3;right:-6px;top:-8px;
+  width:128px;height:128px;display:grid;place-items:center;text-align:center;
+  font-family:var(--display);color:var(--texto);
+}
+.sello::before{
+  content:"";position:absolute;inset:0;
+  background:var(--acento);
+  clip-path:polygon(50% 0%,60% 12%,75% 6%,79% 21%,94% 25%,88% 40%,100% 50%,88% 60%,94% 75%,79% 79%,75% 94%,60% 88%,50% 100%,40% 88%,25% 94%,21% 79%,6% 75%,12% 60%,0% 50%,12% 40%,6% 25%,21% 21%,25% 6%,40% 12%);
+  animation:selloGira 16s linear infinite;
+  filter:drop-shadow(0 6px 10px rgba(0,0,0,.25));
+}
+@keyframes selloGira{to{transform:rotate(360deg)}}
+.sello span{position:relative;animation:pulso 2s ease-in-out infinite}
+.sello b{display:block;font-size:2rem;font-weight:500;line-height:1}
+.sello small{font-family:var(--sans);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}
+
+/* entrada al hacer scroll */
+.afiche .afiche-texto>*,.afiche .afiche-visual{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.afiche.visible .afiche-texto>*,.afiche.visible .afiche-visual{opacity:1;transform:none}
+.afiche.visible .afiche-texto>*:nth-child(2){transition-delay:.1s}
+.afiche.visible .afiche-texto>*:nth-child(3){transition-delay:.2s}
+.afiche.visible .afiche-texto>*:nth-child(4){transition-delay:.3s}
+.afiche.visible .afiche-texto>*:nth-child(5){transition-delay:.4s}
+.afiche.visible .afiche-texto>*:nth-child(6){transition-delay:.5s}
+.afiche.visible .afiche-texto>*:nth-child(7){transition-delay:.6s}
+.afiche.visible .afiche-visual{transition-delay:.25s}
+
+/* =====================================================================
+   NUEVO 2 — REVISTA: tarjeta en la página principal (#revista)
+   ===================================================================== */
+#revista{background:var(--fondo-suave)}
+.revista-teaser{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.revista-teaser .pila{position:relative;aspect-ratio:16/10;perspective:1200px}
+.revista-teaser .pila a{position:absolute;inset:0;display:block}
+.revista-teaser .pila img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  border-radius:var(--radio);box-shadow:0 18px 40px rgba(28,32,29,.28);
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.revista-teaser .pila img:nth-child(1){transform:translate(26px,22px) rotate(4deg);filter:brightness(.92)}
+.revista-teaser .pila img:nth-child(2){transform:translate(13px,11px) rotate(2deg);filter:brightness(.96)}
+.revista-teaser .pila img:nth-child(3){transform:none}
+.revista-teaser .pila:hover img:nth-child(1){transform:translate(70px,26px) rotate(9deg)}
+.revista-teaser .pila:hover img:nth-child(2){transform:translate(36px,14px) rotate(4.5deg)}
+.revista-teaser .pila:hover img:nth-child(3){transform:rotateY(-6deg) scale(1.02)}
+.revista-teaser h2{font-size:clamp(1.9rem,3vw,2.5rem);margin-bottom:14px}
+.revista-teaser p{color:var(--texto-suave);max-width:46ch;margin-bottom:28px}
+
+/* =====================================================================
+   NUEVO 3 — REVISTA: visor animado (paginas-secundarias/revista.html)
+   ===================================================================== */
+.revista-pagina{padding:56px 0 88px;border-bottom:none}
+.visor{max-width:1100px;margin:0 auto}
+.visor-escenario{
+  position:relative;aspect-ratio:16/9;perspective:1800px;overflow:hidden;
+  border-radius:var(--radio);
+  background:radial-gradient(circle at 50% 30%,#12351a,#06140a);
+  box-shadow:0 24px 60px rgba(28,32,29,.35);
+  touch-action:pan-y;
+}
+.rev-pagina{
+  position:absolute;inset:0;margin:0;
+  opacity:0;visibility:hidden;
+  transform:translateX(18%) rotateY(-32deg) scale(.9);
+  transform-origin:left center;
+  transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .6s ease,visibility 0s linear .9s;
+}
+.rev-pagina.previa{transform:translateX(-18%) rotateY(32deg) scale(.9);transform-origin:right center}
+.rev-pagina.activa{opacity:1;visibility:visible;transform:none;transition-delay:0s;z-index:2}
+.rev-pagina img{width:100%;height:100%;object-fit:contain;display:block}
+.rev-pagina.activa img{animation:zoomSuave 12s ease-out forwards}
+@keyframes zoomSuave{from{transform:scale(1)}to{transform:scale(1.045)}}
+
+.visor-flecha{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+  width:48px;height:48px;border:none;border-radius:50%;
+  background:rgba(248,248,245,.88);color:var(--secundario);
+  font-size:1.7rem;line-height:1;cursor:pointer;display:grid;place-items:center;
+  transition:background .2s ease,transform .2s ease;
+}
+.visor-flecha:hover{background:#fff;transform:translateY(-50%) scale(1.1)}
+.visor-ant{left:14px}.visor-sig{right:14px}
+
+.visor-progreso{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.18);z-index:5}
+.visor-progreso i{display:block;height:100%;width:0;background:var(--acento)}
+.visor.reproduciendo .visor-progreso i{animation:progreso var(--intervalo,6s) linear forwards}
+@keyframes progreso{from{width:0}to{width:100%}}
+
+.visor-barra{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:18px 0 14px}
+.visor-contador{font-family:var(--display);color:var(--secundario);font-size:1.05rem}
+.visor-titulo{color:var(--texto-suave);font-size:.9rem;margin-left:10px}
+.visor-acciones{display:flex;gap:10px;flex-wrap:wrap}
+.visor-acciones .boton{padding:9px 16px;font-size:.85rem;cursor:pointer;background:transparent;color:var(--secundario);font-family:var(--sans)}
+.visor-acciones .boton:hover{background:var(--secundario);color:var(--fondo-suave)}
+.visor-acciones a.boton-lleno{background:var(--primario);border-color:var(--primario);color:#fff}
+.visor-acciones a.boton-lleno:hover{background:var(--primario-oscuro)}
+
+.visor-minis{display:grid;grid-template-columns:repeat(8,1fr);gap:8px}
+.visor-minis button{
+  padding:0;border:2px solid transparent;border-radius:var(--radio);overflow:hidden;cursor:pointer;
+  opacity:.55;background:var(--apoyo);transition:opacity .25s ease,transform .25s ease,border-color .25s ease;
+}
+.visor-minis button:hover{opacity:.9;transform:translateY(-3px)}
+.visor-minis button.activa{opacity:1;border-color:var(--acento);transform:translateY(-3px)}
+.visor-minis img{width:100%;aspect-ratio:16/9;object-fit:cover}
+
+.visor:fullscreen{max-width:none;background:#06140a;display:flex;flex-direction:column;justify-content:center;padding:16px}
+.visor:fullscreen .visor-escenario{max-height:calc(100vh - 150px);box-shadow:none}
+.visor:fullscreen .visor-contador,.visor:fullscreen .visor-titulo{color:#fff}
+
+.revista-intro{max-width:60ch;margin:0 auto 36px;text-align:center}
+.revista-intro h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:12px}
+.revista-intro p{color:var(--texto-suave)}
+.volver{display:inline-block;margin-bottom:18px;font-size:.9rem;color:var(--secundario)}
+.volver:hover{text-decoration:underline}
+
+@media (max-width:880px){
+  #oferta{padding:56px 0}
+  .afiche{grid-template-columns:1fr;padding:40px 24px 116px;min-height:0}
+  .afiche-visual{order:-1;min-height:300px}
+  .afiche-foto{width:min(100%,250px)}
+  .sello{width:104px;height:104px;right:4px}
+  .sello b{font-size:1.6rem}
+  .revista-teaser{grid-template-columns:1fr;gap:44px}
+  .visor-minis{grid-template-columns:repeat(4,1fr)}
+  .visor-flecha{width:38px;height:38px;font-size:1.3rem}
+  .rev-pagina{transition-duration:.6s}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .afiche,.gota,.hoja,.olas svg,.afiche-etiqueta,.afiche-foto,.sello::before,.sello span,.rev-pagina.activa img,.afiche.sin-precio .precio-ahora b{animation:none !important}
+  .afiche .afiche-texto>*,.afiche .afiche-visual{opacity:1;transform:none}
+  .visor.reproduciendo .visor-progreso i{animation:none;width:0}
+}

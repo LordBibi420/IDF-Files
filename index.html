@@ -32,9 +32,11 @@
         <li><a href="paginas-secundarias/vision.html">Visión</a></li>
         <li><a href="paginas-secundarias/valores.html">Valores</a></li>
         <li><a href="#producto">Producto</a></li>
+        <li><a href="#oferta">Oferta</a></li>
         <li><a href="#tecnologia">Tecnología</a></li>
         <li><a href="#vitrina">Vitrina</a></li>
         <li><a href="#portafolio">Portafolio</a></li>
+        <li><a href="paginas-secundarias/revista.html">Revista</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
@@ -123,7 +125,60 @@
       </div>
     </div>
   </section>
-    <!-- TECNOLOGÍA — BANNER ROTATIVO -->
+  
+  <!-- OFERTA — AFICHE ANIMADO
+       Para poner el precio: edita SOLO los data-* de la etiqueta <div class="afiche"> de abajo.
+       Mientras estén vacíos, el afiche muestra un hueco animado "Precio por confirmar". -->
+  <section id="oferta">
+    <div class="envolvente">
+      <div class="afiche sin-precio" id="afiche"
+           data-precio-antes=""
+           data-precio-ahora=""
+           data-fin="">
+        <i class="gota"></i><i class="gota"></i><i class="gota"></i><i class="gota"></i>
+        <i class="hoja h1"></i><i class="hoja h2"></i>
+
+        <div class="afiche-texto">
+          <span class="afiche-etiqueta">Oferta de lanzamiento</span>
+          <h2>Tu torre hidropónica, <em>con energía solar</em></h2>
+          <p class="afiche-sub">Cultiva alimentos frescos en tu comunidad, sin tierra ni pesticidas, ahorrando agua y energía.</p>
+
+          <div class="afiche-precios">
+            <div><span class="precio-antes">Antes <b id="precioAntes">$ 000.000</b></span></div>
+            <div class="precio-ahora"><span>Ahora</span><b id="precioAhora">$ 000.000</b></div>
+          </div>
+          <p class="afiche-aviso" id="avisoPrecio">Precio por confirmar — muy pronto.</p>
+
+          <div class="cuenta" id="cuenta" aria-label="Tiempo restante de la oferta">
+            <div><strong id="cDias">00</strong><span>días</span></div>
+            <div><strong id="cHoras">00</strong><span>horas</span></div>
+            <div><strong id="cMin">00</strong><span>min</span></div>
+            <div><strong id="cSeg">00</strong><span>seg</span></div>
+          </div>
+
+          <div class="grupo-botones">
+            <a class="boton boton-lleno" target="_blank" rel="noopener"
+               href="https://wa.me/573235592748?text=Hola%2C%20quiero%20aprovechar%20la%20oferta%20de%20la%20torre%20hidrop%C3%B3nica">Quiero la oferta</a>
+            <a class="boton boton-contorno" href="paginas-secundarias/cotizacion.html">Cotizar</a>
+          </div>
+        </div>
+
+        <div class="afiche-visual">
+          <div class="sello" id="sello"><span><b id="descuento">–%</b><small>descuento</small></span></div>
+          <img class="afiche-foto" src="img/prototipo-torre-hidroponica.jpeg"
+               alt="Torre hidropónica vertical ADMCT HydroSmart Community con panel solar" loading="lazy">
+        </div>
+
+        <div class="olas" aria-hidden="true">
+          <svg viewBox="0 0 2400 100" preserveAspectRatio="none"><path class="ola-1" d="M0 60 Q150 20 300 60 T600 60 T900 60 T1200 60 T1500 60 T1800 60 T2100 60 T2400 60 V100 H0Z"/></svg>
+          <svg viewBox="0 0 2400 100" preserveAspectRatio="none"><path class="ola-2" d="M0 70 Q150 35 300 70 T600 70 T900 70 T1200 70 T1500 70 T1800 70 T2100 70 T2400 70 V100 H0Z"/></svg>
+          <svg viewBox="0 0 2400 100" preserveAspectRatio="none"><path class="ola-3" d="M0 82 Q150 55 300 82 T600 82 T900 82 T1200 82 T1500 82 T1800 82 T2100 82 T2400 82 V100 H0Z"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECNOLOGÍA — BANNER ROTATIVO -->
   <section id="tecnologia">
     <div class="envolvente">
       <div class="cabecera-seccion">
@@ -234,6 +289,29 @@
           <span class="anio">2026 (Septiembre)</span>
           <h3>Pruebas técnicas del sistema de circulación de agua con energía solar, ajuste del módulo XH-M214 y tabulación de datos</h3>
           <span class="categoria">Pruebas y evaluación</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVISTA -->
+  <section id="revista">
+    <div class="envolvente">
+      <div class="revista-teaser">
+        <div class="pila">
+          <a href="paginas-secundarias/revista.html" aria-label="Abrir la revista ADMCT HydroSmart Community">
+            <img src="img/revista/pagina-3.webp" alt="" loading="lazy">
+            <img src="img/revista/pagina-2.webp" alt="" loading="lazy">
+            <img src="img/revista/pagina-1.webp" alt="Portada de la revista ADMCT HydroSmart Community" loading="lazy">
+          </a>
+        </div>
+        <div>
+          <h2>La revista del proyecto</h2>
+          <p>Conoce quiénes somos, el reto, el prototipo, cómo lo medimos y el presupuesto, en un recorrido visual de 8 páginas diseñado por nuestro equipo.</p>
+          <div class="grupo-botones">
+            <a href="paginas-secundarias/revista.html" class="boton boton-lleno">Leer la revista</a>
+            <a href="img/revista/HydroSmart_Community.pdf" class="boton boton-contorno" download>Descargar PDF</a>
+          </div>
         </div>
       </div>
     </div>
@@ -382,7 +460,62 @@ formContacto.addEventListener('submit', async (e) => {
 
     iniciarAutoplay();
   })();
+  /* ============ AFICHE DE OFERTA ============ */
+  (function () {
+    const afiche = document.getElementById('afiche');
+    if (!afiche) return;
+
+    const antes = afiche.dataset.precioAntes;
+    const ahora = afiche.dataset.precioAhora;
+    const fin = afiche.dataset.fin; // ej. 2026-12-31T23:59:00-05:00 (opcional)
+    const formato = n => '$ ' + new Intl.NumberFormat('es-CO').format(Number(n));
+
+    if (ahora && !isNaN(Number(ahora))) {
+      afiche.classList.remove('sin-precio');
+      document.getElementById('precioAhora').textContent = formato(ahora);
+      document.getElementById('avisoPrecio').textContent = 'Precio en pesos colombianos (COP).';
+      if (antes && !isNaN(Number(antes)) && Number(antes) > Number(ahora)) {
+        document.getElementById('precioAntes').textContent = formato(antes);
+        const pct = Math.round((1 - Number(ahora) / Number(antes)) * 100);
+        document.getElementById('descuento').textContent = '-' + pct + '%';
+      } else {
+        document.querySelector('.precio-antes').style.display = 'none';
+        document.getElementById('sello').style.display = 'none';
+      }
+    } else {
+      document.getElementById('descuento').textContent = '-?%';
+    }
+
+    // cuenta regresiva (solo si se define data-fin)
+    if (fin && !isNaN(Date.parse(fin))) {
+      afiche.classList.add('con-cuenta');
+      const dos = n => String(n).padStart(2, '0');
+      const pintar = () => {
+        let d = Math.max(0, Date.parse(fin) - Date.now());
+        const dias = Math.floor(d / 864e5); d -= dias * 864e5;
+        const h = Math.floor(d / 36e5); d -= h * 36e5;
+        const m = Math.floor(d / 6e4); d -= m * 6e4;
+        document.getElementById('cDias').textContent = dos(dias);
+        document.getElementById('cHoras').textContent = dos(h);
+        document.getElementById('cMin').textContent = dos(m);
+        document.getElementById('cSeg').textContent = dos(Math.floor(d / 1e3));
+      };
+      pintar();
+      setInterval(pintar, 1000);
+    }
+
+    // animación de entrada al hacer scroll
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { afiche.classList.add('visible'); obs.disconnect(); } });
+      }, { threshold: 0.25 });
+      obs.observe(afiche);
+    } else {
+      afiche.classList.add('visible');
+    }
+  })();
 </script>
+
 
 </body>
 </html>
