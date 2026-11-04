@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lienzo Canvas — ADMCT HydroSmart Community</title>
+
+<link rel="icon" type="image/png" sizes="180x180" href="../img/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../contenido.css">
+
+<style>
+/* ============ LIENZO CANVAS (estilos propios de esta página) ============ */
+.canvas-pagina{padding:56px 0 88px;border-bottom:none}
+.cv-grid{
+  display:grid;gap:16px;margin-top:8px;
+  grid-template-columns:1fr 1fr 1.25fr 1fr 1fr;
+  grid-template-areas:
+    "soc act val rel seg"
+    "soc rec val can seg"
+    "cos cos cos ing ing";
+}
+.cv-card{
+  position:relative;background:#fff;border:1px solid var(--linea);border-radius:14px;
+  padding:20px 20px 18px;cursor:pointer;
+  box-shadow:0 2px 6px rgba(28,32,29,.05);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,opacity .4s,filter .4s;
+}
+.cv-card:hover,.cv-card:focus-visible{transform:translateY(-5px);box-shadow:0 16px 34px rgba(28,32,29,.16);outline:none}
+.cv-cab{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.cv-card h3{font-family:var(--display);font-weight:500;font-size:1.1rem;line-height:1.15;color:var(--primario-oscuro)}
+.cv-num{
+  flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  background:var(--primario-oscuro);color:#fff;font-weight:600;font-size:.95rem;
+  transition:transform .35s;
+}
+.cv-card:hover .cv-num,.cv-card.activa .cv-num{transform:rotate(360deg) scale(1.12)}
+.cv-card ul{list-style:none;display:grid;gap:7px;font-size:.88rem;color:var(--texto)}
+.cv-card li{position:relative;padding-left:16px}
+.cv-card li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--primario)}
+
+/* bloques en azul */
+.cv-rel h3,.cv-can h3,.cv-seg h3,.cv-cos h3,.cv-ing h3{color:var(--secundario)}
+.cv-rel .cv-num,.cv-can .cv-num,.cv-seg .cv-num,.cv-cos .cv-num,.cv-ing .cv-num{background:var(--secundario)}
+.cv-rel li::before,.cv-can li::before,.cv-seg li::before{background:var(--secundario)}
+.cv-cos,.cv-ing{background:#E6ECFB;border-color:rgba(6,17,162,.12)}
+.cv-cos p,.cv-ing p{font-size:.92rem;color:var(--texto);margin-bottom:6px}
+
+/* posiciones */
+.cv-soc{grid-area:soc}.cv-act{grid-area:act}.cv-rec{grid-area:rec}.cv-val{grid-area:val}
+.cv-rel{grid-area:rel}.cv-can{grid-area:can}.cv-seg{grid-area:seg}.cv-cos{grid-area:cos}.cv-ing{grid-area:ing}
+
+/* propuesta de valor */
+.cv-val{background:linear-gradient(160deg,var(--primario-oscuro),#14471a);color:#fff;border:none}
+.cv-val h3{color:#fff;font-size:1.3rem}
+.cv-val .cv-num{background:#fff;color:var(--primario-oscuro)}
+.cv-val p{font-size:.98rem;line-height:1.6;margin-bottom:18px;color:rgba(255,255,255,.92)}
+.cv-chips{display:grid;gap:9px}
+.cv-chips span{
+  background:rgba(255,255,255,.14);border-radius:8px;padding:10px 14px;font-weight:500;font-size:.88rem;
+  transition:background .3s,transform .3s;
+}
+.cv-val:hover .cv-chips span{background:rgba(255,255,255,.22)}
+.cv-val:hover .cv-chips span:nth-child(2){transform:translateX(6px)}
+.cv-val:hover .cv-chips span:nth-child(3){transform:translateX(12px)}
+
+/* cifra destacada */
+.cv-cifra-caja{margin-top:16px;background:#E6ECFB;border-radius:10px;padding:14px 16px}
+.cv-cifra{display:block;font-family:var(--display);font-size:3rem;line-height:1;color:var(--secundario)}
+.cv-cifra-caja small{font-weight:600;color:var(--texto)}
+
+/* entrada animada */
+.cv-grid.preparado .cv-card{opacity:0;transform:translateY(26px)}
+.cv-grid.preparado.visible .cv-card{opacity:1;transform:none;transition-delay:calc(var(--i)*90ms)}
+.cv-grid.preparado.visible .cv-card:hover{transition-delay:0s;transform:translateY(-5px)}
+
+.cv-grid.recorrido.preparado.visible .cv-card{transition-delay:0s}
+
+/* recorrido guiado */
+.cv-grid.recorrido .cv-card:not(.activa){opacity:.32;filter:saturate(.5)}
+.cv-grid.recorrido .cv-card.activa{transform:scale(1.04);z-index:2;box-shadow:0 0 0 3px var(--acento),0 20px 44px rgba(28,32,29,.28)}
+
+.cv-panel{
+  margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;
+  background:#fff;border:1px solid var(--linea);border-radius:14px;padding:18px 22px;
+}
+.cv-leyenda{flex:1 1 280px;min-height:3.2em}
+.cv-leyenda strong{display:block;font-family:var(--display);font-weight:500;font-size:1.1rem;color:var(--secundario)}
+.cv-leyenda span{color:var(--texto-suave);font-size:.92rem}
+.cv-controles{display:flex;flex-wrap:wrap;gap:10px}
+.cv-controles .boton{cursor:pointer;padding:10px 18px;font-size:.88rem}
+.cv-puntos{display:flex;gap:7px;width:100%;justify-content:center}
+.cv-puntos button{width:11px;height:11px;border-radius:50%;border:0;background:var(--linea);cursor:pointer;padding:0;transition:transform .3s,background .3s}
+.cv-puntos button.activa{background:var(--primario);transform:scale(1.5)}
+.cv-acciones{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:28px}
+
+@media (max-width:1000px){
+  .cv-grid{
+    grid-template-columns:1fr 1fr;
+    grid-template-areas:"val val" "soc act" "soc rec" "rel seg" "can seg" "cos ing";
+  }
+}
+@media (max-width:600px){
+  .cv-grid{
+    grid-template-columns:1fr;
+    grid-template-areas:"seg" "val" "can" "rel" "ing" "act" "rec" "soc" "cos";
+  }
+  .cv-grid.recorrido .cv-card.activa{transform:scale(1.015)}
+}
+@media (prefers-reduced-motion:reduce){
+  .cv-card,.cv-num,.cv-chips span{transition:none !important}
+  .cv-grid.preparado .cv-card{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="barra-nav">
+    <a href="../index.html#inicio" class="marca">
+      <img src="../img/logo.png" alt="Logo ADMCT HydroSmart Community" class="logo-marca">
+      ADMCT <span>HydroSmart</span>
+    </a>
+    <button class="btn-menu" id="btnMenu" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="navPrincipal">
+      <ul>
+        <li><a href="../index.html#inicio">Inicio</a></li>
+        <li><a href="../index.html#quienes-somos">Quiénes somos</a></li>
+        <li><a href="mision.html">Misión</a></li>
+        <li><a href="vision.html">Visión</a></li>
+        <li><a href="valores.html">Valores</a></li>
+        <li><a href="../index.html#producto">Producto</a></li>
+        <li><a href="../index.html#oferta">Oferta</a></li>
+        <li><a href="../index.html#tecnologia">Tecnología</a></li>
+        <li><a href="../index.html#vitrina">Vitrina</a></li>
+        <li><a href="../index.html#portafolio">Portafolio</a></li>
+        <li><a href="revista.html">Revista</a></li>
+        <li><a href="canvas.html">Canvas</a></li>
+        <li><a href="../index.html#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="canvas-pagina">
+    <div class="envolvente">
+      <a class="volver" href="../index.html">← Volver al inicio</a>
+      <div class="revista-intro">
+        <h1>Lienzo Canvas</h1>
+        <p>Así está construido nuestro modelo de negocio. Toca cualquier bloque para destacarlo, o recorre los nueve bloques en orden con el recorrido guiado.</p>
+      </div>
+
+      <div class="cv-grid" id="grid">
+
+        <article class="cv-card cv-soc" style="--i:7" tabindex="0" data-n="8">
+          <div class="cv-cab"><span class="cv-num">8</span><h3>Socios clave</h3></div>
+          <ul>
+            <li>Docentes mentores</li>
+            <li>Administración de la unidad residencial</li>
+            <li>Aliados locales que apoyan y colaboran</li>
+            <li>Estudiantes líderes de ADMCT</li>
+            <li>Familias y vecinos que participan</li>
+          </ul>
+        </article>
+
+        <article class="cv-card cv-act" style="--i:5" tabindex="0" data-n="6">
+          <div class="cv-cab"><span class="cv-num">6</span><h3>Actividades clave</h3></div>
+          <ul>
+            <li>Diseñar y construir</li>
+            <li>Probar la torre</li>
+            <li>Instalar y cultivar</li>
+            <li>Compartir resultados</li>
+          </ul>
+        </article>
+
+        <article class="cv-card cv-rec" style="--i:6" tabindex="0" data-n="7">
+          <div class="cv-cab"><span class="cv-num">7</span><h3>Recursos clave</h3></div>
+          <ul>
+            <li>Estructura PVC y torre</li>
+            <li>Panel solar y batería</li>
+            <li>Bomba y riego</li>
+            <li>Sustratos y nutrientes</li>
+            <li>Equipo estudiantil</li>
+          </ul>
+        </article>
+
+        <article class="cv-card cv-val" style="--i:1" tabindex="0" data-n="2">
+          <div class="cv-cab"><span class="cv-num">2</span><h3>Propuesta de valor</h3></div>
+          <p>Torre hidropónica vertical de 1,50 m con energía solar que lleva plantas aromáticas y alimentos frescos a zonas comunes con poco espacio, cuida el agua y enseña cuidado ambiental.</p>
+          <div class="cv-chips">
+            <span>Riego por goteo y recirculación</span>
+            <span>Energía solar</span>
+            <span>Aprendizaje para la comunidad</span>
+          </div>
+        </article>
+
+        <article class="cv-card cv-rel" style="--i:3" tabindex="0" data-n="4">
+          <div class="cv-cab"><span class="cv-num">4</span><h3>Relaciones con clientes</h3></div>
+          <ul>
+            <li>Participación en el cuidado de la torre</li>
+            <li>Encuestas y entrevistas</li>
+            <li>Resultados compartidos</li>
+          </ul>
+        </article>
+
+        <article class="cv-card cv-can" style="--i:2" tabindex="0" data-n="3">
+          <div class="cv-cab"><span class="cv-num">3</span><h3>Canales</h3></div>
+          <ul>
+            <li>Presentaciones en la unidad residencial</li>
+            <li>Encuesta en línea</li>
+            <li>Redes de aprendizaje</li>
+          </ul>
+        </article>
+
+        <article class="cv-card cv-seg" style="--i:0" tabindex="0" data-n="1">
+          <div class="cv-cab"><span class="cv-num">1</span><h3>Segmento de clientes</h3></div>
+          <ul>
+            <li>Residentes de la Unidad Residencial Atalaya de la Mota, Medellín</li>
+            <li>Comunidad con espacios comunes subutilizados</li>
+          </ul>
+          <div class="cv-cifra-caja">
+            <b class="cv-cifra" id="cifra" data-to="40">40</b>
+            <small>respuestas de encuesta</small>
+          </div>
+        </article>
+
+        <article class="cv-card cv-cos" style="--i:8" tabindex="0" data-n="9">
+          <div class="cv-cab"><span class="cv-num">9</span><h3>Estructura de costes</h3></div>
+          <p><strong>Coste de nuestro prototipo: $554.450 COP</strong></p>
+          <p>Estructura y torre, sistema hidropónico, bomba y riego, sustratos y nutrientes, herramientas; más mantenimiento.</p>
+        </article>
+
+        <article class="cv-card cv-ing" style="--i:4" tabindex="0" data-n="5">
+          <div class="cv-cab"><span class="cv-num">5</span><h3>Fuente de ingresos</h3></div>
+          <p>Propuesta por validar: aporte de zonas comunes, aliados locales y cuidado voluntario de los residentes.</p>
+        </article>
+
+      </div>
+
+      <div class="cv-panel">
+        <div class="cv-leyenda" aria-live="polite">
+          <strong id="cvTitulo">Recorrido guiado</strong>
+          <span id="cvPregunta">Pulsa «Iniciar recorrido» para ver los nueve bloques en orden.</span>
+        </div>
+        <div class="cv-controles">
+          <button type="button" class="boton" id="cvAnt">‹ Anterior</button>
+          <button type="button" class="boton boton-lleno" id="cvPlay">Iniciar recorrido</button>
+          <button type="button" class="boton" id="cvSig">Siguiente ›</button>
+          <button type="button" class="boton" id="cvTodo">Ver todo</button>
+        </div>
+        <div class="cv-puntos" id="cvPuntos" aria-hidden="true"></div>
+      </div>
+
+      <div class="cv-acciones">
+        <a class="boton boton-lleno" href="../img/modelo-canvas.pdf" download>Descargar PDF</a>
+        <a class="boton" href="../img/modelo-canvas.pdf" target="_blank" rel="noopener">Abrir en pestaña nueva</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="envolvente" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:8px;">
+    <span>© 2026 ADMCT HydroSmart Community — Sembrando tecnología, cosechando comunidad</span>
+  </div>
+</footer>
+
+<script>
+  const btnMenu = document.getElementById('btnMenu');
+  const navPrincipal = document.getElementById('navPrincipal');
+  btnMenu.addEventListener('click', () => {
+    const abierto = navPrincipal.classList.toggle('abierto');
+    btnMenu.setAttribute('aria-expanded', abierto);
+  });
+
+  /* ============ LIENZO CANVAS ============ */
+  (function () {
+    const grid = document.getElementById('grid');
+    const tarjetas = Array.from(grid.querySelectorAll('.cv-card'));
+    const orden = [1,2,3,4,5,6,7,8,9].map(n => tarjetas.find(t => +t.dataset.n === n));
+    const nombres = ['Segmento de clientes','Propuesta de valor','Canales','Relaciones con clientes','Fuente de ingresos','Actividades clave','Recursos clave','Socios clave','Estructura de costes'];
+    const preguntas = [
+      '¿Para quién creamos valor?',
+      '¿Qué le ofrecemos a la comunidad?',
+      '¿Cómo llegamos a ellos?',
+      '¿Cómo nos relacionamos con ellos?',
+      '¿Cómo se financia el proyecto?',
+      '¿Qué hacemos para que funcione?',
+      '¿Qué necesitamos para hacerlo?',
+      '¿Quién nos acompaña?',
+      '¿Cuánto cuesta?'
+    ];
+    const titulo = document.getElementById('cvTitulo');
+    const pregunta = document.getElementById('cvPregunta');
+    const btnPlay = document.getElementById('cvPlay');
+    const puntos = document.getElementById('cvPuntos');
+    const reducir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let actual = -1, timer = null, reproduciendo = false;
+
+    orden.forEach((_, i) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('aria-label', 'Bloque ' + (i + 1));
+      b.addEventListener('click', () => { parar(); ir(i); });
+      puntos.appendChild(b);
+    });
+    puntos.removeAttribute('aria-hidden');
+
+    function ir(i) {
+      actual = (i + orden.length) % orden.length;
+      grid.classList.add('recorrido');
+      orden.forEach((t, k) => t.classList.toggle('activa', k === actual));
+      puntos.querySelectorAll('button').forEach((b, k) => b.classList.toggle('activa', k === actual));
+      titulo.textContent = (actual + 1) + '. ' + nombres[actual];
+      pregunta.textContent = preguntas[actual];
+      if (window.innerWidth < 1000) orden[actual].scrollIntoView({ behavior: reducir ? 'auto' : 'smooth', block: 'center' });
+    }
+    function parar() {
+      clearInterval(timer); reproduciendo = false;
+      btnPlay.textContent = actual < 0 ? 'Iniciar recorrido' : 'Reanudar';
+    }
+    function arrancar() {
+      reproduciendo = true; btnPlay.textContent = 'Pausar';
+      if (actual < 0) ir(0);
+      clearInterval(timer);
+      timer = setInterval(() => ir(actual + 1), 4500);
+    }
+    function verTodo() {
+      parar(); actual = -1;
+      grid.classList.remove('recorrido');
+      orden.forEach(t => t.classList.remove('activa'));
+      puntos.querySelectorAll('button').forEach(b => b.classList.remove('activa'));
+      titulo.textContent = 'Recorrido guiado';
+      pregunta.textContent = 'Pulsa «Iniciar recorrido» para ver los nueve bloques en orden.';
+      btnPlay.textContent = 'Iniciar recorrido';
+    }
+
+    btnPlay.addEventListener('click', () => reproduciendo ? parar() : arrancar());
+    document.getElementById('cvSig').addEventListener('click', () => { parar(); ir(actual + 1); });
+    document.getElementById('cvAnt').addEventListener('click', () => { parar(); ir(actual < 0 ? 0 : actual - 1); });
+    document.getElementById('cvTodo').addEventListener('click', verTodo);
+
+    tarjetas.forEach(t => {
+      const elegir = () => { parar(); ir(orden.indexOf(t)); };
+      t.addEventListener('click', elegir);
+      t.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); elegir(); } });
+    });
+
+    /* entrada animada + cifra que cuenta */
+    const cifra = document.getElementById('cifra');
+    function contar() {
+      const meta = +cifra.dataset.to;
+      if (reducir) { cifra.textContent = meta; return; }
+      const t0 = performance.now();
+      (function paso(t) {
+        const p = Math.min((t - t0) / 1400, 1);
+        cifra.textContent = Math.round(meta * (1 - Math.pow(1 - p, 3)));
+        if (p < 1) requestAnimationFrame(paso);
+      })(t0);
+    }
+    if ('IntersectionObserver' in window) {
+      cifra.textContent = '0';
+      grid.classList.add('preparado');
+      const obs = new IntersectionObserver(es => {
+        if (es[0].isIntersecting) { grid.classList.add('visible'); setTimeout(contar, 500); obs.disconnect(); }
+      }, { threshold: 0.15 });
+      obs.observe(grid);
+    }
+  })();
+</script>
+
+</body>
+</html>
