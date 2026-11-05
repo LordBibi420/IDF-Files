@@ -81,6 +81,9 @@ input:focus,select:focus{outline:2px solid var(--verde);outline-offset:1px}
 .item>span{font-weight:500;white-space:nowrap}
 .nota{font-size:.78rem;color:var(--suave);margin-top:14px}
 
+.antes{font-family:var(--sans);font-size:.95rem;color:var(--suave);text-decoration:line-through}
+.desc{display:inline-block;background:var(--sol);color:var(--texto);font-family:var(--sans);font-size:.78rem;font-weight:600;padding:2px 8px;border-radius:20px;vertical-align:middle}
+
 /* ===== 5. CELULAR E IMPRESIÓN ===== */
 @media(max-width:760px){.tablero{grid-template-columns:1fr}.dos{grid-template-columns:1fr}}
 @media print{
@@ -194,7 +197,7 @@ const PRODUCTOS = [
   { nombre: 'Planta de menta',                    precio: 5000 },
   { nombre: 'Planta de lavanda',                  precio: 9000 },
   { nombre: 'Semillero de lechuga',               precio: 3600 },
-  { nombre: 'Proyecto ADMCT HydroSmart Community', precio: 650000, regalo: true }
+  { nombre: 'Proyecto ADMCT HydroSmart Community', precio: 619900, antes: 649900, regalo: true }
 ];
 
 /* ===== B. HERRAMIENTAS ===== */
@@ -217,9 +220,14 @@ let pedido = [];
 const cantidadValida = c => Number.isInteger(c) && c >= 1 && c <= 999;
 
 /* Precio unitario del producto elegido */
+const pct = p => ((1 - p.precio / p.antes) * 100).toFixed(2).replace('.', ',');
+
 function actualizarPrecio() {
   const p = PRODUCTOS[$('producto').value];
-  $('precio').textContent = p ? cop(p.precio) : '—';
+  $('precio').innerHTML = p
+    ? (p.antes ? `<s class="antes">${cop(p.antes)}</s> ` : '') + cop(p.precio) +
+      (p.antes ? ` <span class="desc">-${pct(p)}%</span>` : '')
+    : '—';
   avisoProyecto();
 }
 
@@ -264,7 +272,7 @@ function dibujarCotizacion() {
     const p = PRODUCTOS[l.i], subtotal = l.cant * p.precio;
     total += subtotal;
     if (p.regalo) regalos += l.cant;           // un semillero gratis por cada proyecto
-    return `<div class="item"><div><strong>${p.nombre}</strong><small>${l.cant} × ${cop(p.precio)}</small></div><span>${cop(subtotal)}</span></div>`;
+    return `<div class="item"><div><strong>${p.nombre}</strong><small>${l.cant} × ${p.antes ? `<s class="antes">${cop(p.antes)}</s> ` : ''}${cop(p.precio)}</small></div><span>${cop(subtotal)}</span></div>`;
   }).join('');
   const cliente = $('cliente').value.trim();
   $('filaCliente').hidden = !cliente;
